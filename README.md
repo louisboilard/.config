@@ -44,7 +44,8 @@ rust-doc.vim plugin to generate searchable Rust documentation from within neovim
 Requires a local copy of the rust docs.
 
 
-Syntastic plugin for syntax checking and tooglable error/warning window.
+Syntastic plugin for syntax checking, toogleable error/warning window and 
+other customizations for error signaling.
 
 
 rust-vim plugin for automatic integration of Syntastic, rustfmt (code formatting),
