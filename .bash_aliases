@@ -1,10 +1,9 @@
 # Useful bash aliases.
 
 # some ls aliases
-alias la='ls -a'
-alias ll='ls -alF'
-alias l='ls -CF'
 #replace ls by exa (a replacement for ls written in Rust)
+alias la='exa -a'
+alias ll='exa -l'
 alias ls='exa'
 
 
@@ -14,12 +13,17 @@ alias top=gotop
 # open ~/.bashrc in vim simply by typing bashrc in the shell.
 alias bashrc='nvim ~/.bashrc'
 
+# open ~/.bash_aliases in vim simply by typing bashalias in the shell.
+alias bashalias='nvim ~/.bash_aliases'
+
 # opens the init.vim config file (equivalent of vimrc for neovim).
 alias vimrc='nvim ~/.config/nvim/init.vim'
 
 #Vim alias
 alias v=nvim
 
+#Vim style exit
+alias q=exit
 
 #python aliases
 alias python=python3
