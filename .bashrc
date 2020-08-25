@@ -1,6 +1,4 @@
-# ~/.bashrc -> commands executed by default when running bash.
-# ~/.bashrc: executed by bash(1) for non-login shells.
-
+# Bash configurations.
 
 # Fetch aliases from the .bash_aliases file
 if [ -f ~/.bash_aliases ]; then
