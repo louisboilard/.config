@@ -1,7 +1,7 @@
 # Dotfiles.
 
 
-Config files for Bash, NeoVim and Tmux.
+Config files for Bash, NeoVim, Tmux and Zsh.
 View the comments in the files for more specifications.
 
 
@@ -63,3 +63,14 @@ Theme/colorscheme: neodark.
 
 Includes mouse scrolling. Default prefix is remapped to C-a as 
 opposed to the default C-b.
+
+
+## Zsh
+
+
+.zshrc file to see my Z shell config. 
+Vi mode specifics, use of the zsh-syntax-highlighting plugin 
+for highlighting and ctrl-o bind to access the lf program 
+(a terminal file manager written in Go). Aliases are 
+shared with the bash config (they're fetched from 
+the .bash_aliases file).
