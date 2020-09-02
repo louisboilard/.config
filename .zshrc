@@ -2,7 +2,9 @@
 
 # Enable colors and change prompt:
 autoload -U colors && colors
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[yellow]%}ツ% %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+#PS1="%B%{$fg[black]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[yellow]%}ツ% %{$fg[magenta]%}%~%{$fg[black]%}]%{$reset_color%}$%b "
+
+PS1="%B%{$fg[black]%}[%{$fg[yellow]%}ツ% %{$fg[magenta]%}%~%{$fg[black]%}]%{$reset_color%}$%b "
 
 # History in cache directory:
 HISTSIZE=10000
@@ -45,7 +47,7 @@ zle-line-init() {
     echo -ne "\e[6 q"
 }
 zle -N zle-line-init
-
+echo -ne '\e[6 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 
 # Use lf to switch directories and bind it to ctrl-o
@@ -61,15 +63,15 @@ lfcd () {
 bindkey -s '^o' 'lfcd\n'
 
 
-# Load aliases and shortcuts if they exist.
+# Load aliases and shortcuts if existent.
 [ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
+#displays current date when opening new shell.
+date +%d-%m-%Y
 
 # Plugins.
 plugins=(zsh-syntax-highlighting)
 
 
-# Load zsh-syntax-highlighting; should be last thing of the file. Change user for your user.
-source /home/user/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ./.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
+# Load zsh-syntax-highlighting; should be last thing of the file
+source /home/louis/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
