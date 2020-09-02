@@ -1,5 +1,10 @@
 #Configuration file for zsh
 
+export ZSH=$HOME/.oh-my-zsh
+
+#theme
+#ZSH_THEME="af-magic"
+
 # Enable colors and change prompt:
 autoload -U colors && colors
 #PS1="%B%{$fg[black]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[yellow]%}ツ% %{$fg[magenta]%}%~%{$fg[black]%}]%{$reset_color%}$%b "
@@ -72,6 +77,8 @@ date +%d-%m-%Y
 # Plugins.
 plugins=(zsh-syntax-highlighting)
 
+#sets the ZSH source.
+source $ZSH/oh-my-zsh.sh
 
 # Load zsh-syntax-highlighting; should be last thing of the file
 source /home/louis/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
