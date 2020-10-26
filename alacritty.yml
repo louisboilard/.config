@@ -1,0 +1,171 @@
+#### Configuration for the Alacritty terminal emulator ####
+
+window:
+  # Default Window dimensions 
+  dimensions:
+    columns: 80
+    lines: 30
+
+  # Window padding
+  padding:
+    x: 6
+    y: 6
+
+  # Spread additional padding evenly around the terminal content.
+  dynamic_padding: false
+
+  # Window decorations
+  #     - full: Borders and title bar
+  #     - none: Neither borders nor title bar
+  decorations: none
+
+  startup_mode: Windowed
+
+  # Window title
+  title: Valair
+
+
+  # Window class 
+  class:
+    # Application instance name
+    instance: Alacritty
+    # General application class
+    general: Alacritty
+
+
+scrolling:
+  # Maximum number of lines in the scrollback buffer.
+  history: 10000
+
+  # Scrolling distance multiplier.
+  multiplier: 3
+
+# Font configuration
+font:
+  normal:
+    family: monospace
+    style: Regular
+
+  bold:
+    family: monospace
+    style: Bold
+
+  italic:
+    family: monospace
+    style: Italic
+
+  bold_italic:
+    family: monospace
+    style: Bold Italic
+
+  # Point size
+  size: 11.0
+
+  offset:
+    x: 0
+    y: 0
+
+  glyph_offset:
+    x: 0
+    y: 0
+
+
+
+# Colors (Dracula)
+colors:
+  # Default colors
+  primary:
+    background: '#282a36'
+    foreground: '#f8f8f2'
+
+  # Normal colors
+  normal:
+    black:   '#000000'
+    red:     '#ff5555'
+    green:   '#50fa7b'
+    yellow:  '#f1fa8c'
+    blue:    '#caa9fa'
+    magenta: '#ff79c6'
+    cyan:    '#8be9fd'
+    white:   '#bfbfbf'
+
+  # Bright colors
+  bright:
+    black:   '#575b70'
+    red:     '#ff6e67'
+    green:   '#5af78e'
+    yellow:  '#f4f99d'
+    blue:    '#caa9fa'
+    magenta: '#ff92d0'
+    cyan:    '#9aedfe'
+    white:   '#e6e6e6'
+
+  cursor:
+    text: CellBackground
+    cursor: CellForeground
+
+  vi_mode_cursor:
+    text: CellBackground
+    cursor: CellForeground
+
+  # Selection colors
+  selection:
+    text: CellBackground
+    background: CellForeground
+
+  # Search colors
+  search:
+    matches:
+      foreground: '#000000'
+      background: '#ffffff'
+
+    bar:
+      background: '#c5c8c6'
+      foreground: '#1d1f21'
+
+
+# Background opacity
+background_opacity: 0.90
+
+# Mouse Bindings
+mouse_bindings:
+  - { mouse: Middle, action: PasteSelection }
+
+
+selection:
+  # When set to `true`, selected text will be copied to the primary clipboard.
+  save_to_clipboard: false
+
+cursor:
+  # Cursor style
+  # Values for `style`:
+  #   - ▇ Block
+  #   - _ Underline
+  #   - | Beam
+  style: Beam
+
+  # Vi mode cursor style
+  vi_mode_style: Block
+
+  # If this is `true`, the cursor will be rendered as a hollow box when the
+  # window is not focused.
+  unfocused_hollow: true
+
+  # thickness of cursor from `0.0` to `1.0`.
+  thickness: 0.0
+
+
+# Live config reload
+live_config_reload: true
+
+# Shell
+
+shell:
+  program: /bin/zsh
+  args:
+    - --login
+
+# Startup directory
+# Directory opened when we start alacritty. None == current. 
+working_directory: None
+
