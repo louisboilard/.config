@@ -4,6 +4,7 @@ folder=~/Config
 
 
 cp  ~/.config/nvim/init.vim \
+    ~/.config/alacritty/alacritty.yml \
     ~/.zshrc \
     ~/.bashrc \
     ~/.tmux.conf \
