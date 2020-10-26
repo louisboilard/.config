@@ -23,6 +23,7 @@ set shiftwidth=4  " width used in each step of autoindent (and << / >>)
 " Provides tab-completion for all file-related tasks
 set path+=**
 
+
 " Display all matching files when we tab complete
 set wildmenu
 
@@ -79,10 +80,6 @@ nnoremap <silent> n   n:call HLNext(0.4)<cr>
 nnoremap <silent> N   N:call HLNext(0.4)<cr>
 
 
-"====[ set the background to the same color of terminal ]===========
-hi NonText ctermbg=none
-hi Normal guibg=NONE ctermbg=NONE
-
 
 "Override search highlighting
 highlight Search cterm=NONE ctermfg=None ctermbg=black
@@ -104,7 +101,7 @@ if (has("nvim"))
 endif
 
 if (has("termguicolors"))
-    set termguicolors
+    set notermguicolors
 endif
 
 
@@ -225,7 +222,7 @@ call plug#end()
 let g:deoplete#enable_at_startup = 1
 
 " Airline config
-let g:airline_theme = 'minimalist'
+let g:airline_theme = 'fruit_punch'
 let g:airline#extensions#tabline#enabled = 1
 
 " Theme colorscheme
@@ -312,10 +309,17 @@ let g:syntastic_enables_balloons = 1
 let g:syntastic_check_on_open = 1
 
 
-" ==[ Rust formating using rustfmt]==
+" ==[ Rust formating using rustfmt ]==
 
 " Activate format everytime we :w (save)
 let g:rustfmt_autosave = 1
 
 " press ctrl-f to run :RustFmt
 nnoremap <C-f> :RustFmt<CR>
+
+"====[ End of Plugin Section ]===="
+
+
+"====[ set the background to the color of the terminal ]===========
+hi NonText ctermbg=none
+hi Normal guibg=NONE ctermbg=NONE
