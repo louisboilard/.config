@@ -11,7 +11,7 @@ alias ls='exa'
 alias top=gotop
 
 # open ~/.bash_aliases in vim simply by typing bashalias in the shell.
-alias bashalias='nvim ~/.bash_aliases'
+alias bash_aliases='nvim ~/.bash_aliases'
 
 # open ~/.bashrc in vim simply by typing bashrc in the shell.
 alias bashrc='nvim ~/.bashrc'
@@ -21,6 +21,10 @@ alias zshrc='nvim ~/.zshrc'
 
 # opens the init.vim config file (equivalent of vimrc for neovim).
 alias vimrc='nvim ~/.config/nvim/init.vim'
+
+# open ~/.config/alacritty/alacritty.yml in vim simply by 
+#typing alacrittyrc in the shell.
+alias alacrittyrc='nvim ~/.config/alacritty/alacritty.yml'
 
 #Vim alias
 alias v=nvim
