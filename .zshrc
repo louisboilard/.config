@@ -5,11 +5,16 @@ export ZSH=$HOME/.oh-my-zsh
 #theme
 #ZSH_THEME="af-magic"
 
+#sets the ZSH source.
+source $ZSH/oh-my-zsh.sh
+
+
+
 # Enable colors and change prompt:
 autoload -U colors && colors
 #PS1="%B%{$fg[black]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[yellow]%}ツ% %{$fg[magenta]%}%~%{$fg[black]%}]%{$reset_color%}$%b "
 
-PS1="%B%{$fg[black]%}[%{$fg[yellow]%}ツ% %{$fg[magenta]%}%~%{$fg[black]%}]%{$reset_color%}$%b "
+PS1="%B%{$fg[white]%}[%{$fg[yellow]%}ツ% %{$fg[magenta]%}%~%{$fg[white]%}]%{$reset_color%}$%b "
 
 # History in cache directory:
 HISTSIZE=10000
@@ -68,8 +73,6 @@ lfcd () {
 bindkey -s '^o' 'lfcd\n'
 
 
-# Load aliases and shortcuts if existent.
-[ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
 #displays current date when opening new shell.
 date +%d-%m-%Y
@@ -77,8 +80,9 @@ date +%d-%m-%Y
 # Plugins.
 plugins=(zsh-syntax-highlighting)
 
-#sets the ZSH source.
-source $ZSH/oh-my-zsh.sh
+
+# Load aliases and shortcuts if existent.
+[ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
 # Load zsh-syntax-highlighting; should be last thing of the file
 source /home/louis/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
