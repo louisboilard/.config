@@ -1,7 +1,7 @@
 # Dotfiles.
 
 
-Config files for Bash, NeoVim, Tmux and Zsh.
+Config files for Bash, NeoVim, Tmux, Zsh and Alacritty.
 View the comments in the files for more specifications.
 
 
@@ -74,3 +74,11 @@ for highlighting and ctrl-o bind to access the lf program
 (a terminal file manager written in Go). Aliases are 
 shared with the bash config (they're fetched from 
 the .bash_aliases file).
+
+
+## Alactritty
+
+
+alactritty.yml file to see the config for the 
+Alactritty terminal emulator. Includes transparency and 
+other slight windows adjustments. Runs Zsh by default.
