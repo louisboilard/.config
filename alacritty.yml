@@ -4,17 +4,17 @@ window:
   # Default Window dimensions 
   dimensions:
     columns: 80
-    lines: 30
+    lines: 46
 
-  # Window position (changes require restart)
+  # Window position at spawn.
   #position:
   #  x: 2200
   #  y: 150
   
   # Window padding
   padding:
-    x: 6
-    y: 6
+    x: 15
+    y: 15
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: false
@@ -27,7 +27,7 @@ window:
   startup_mode: Windowed
 
   # Window title
-  title: Valair
+  title: 😂
 
 
   # Window class 
@@ -68,7 +68,7 @@ font:
 
   offset:
     x: 0
-    y: 0
+    y: 1
 
   glyph_offset:
     x: 0
@@ -78,10 +78,11 @@ font:
 
 # Colors (Dracula)
 colors:
+
   # Default colors
   primary:
-    background: '#282a36'
-    foreground: '#f8f8f2'
+    background: '0x282c34'
+    foreground: '0xbbc2cf'
 
   # Normal colors
   normal:
