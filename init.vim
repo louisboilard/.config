@@ -123,6 +123,10 @@ nnoremap <C-V>     v
 vnoremap    v   <C-V>
 vnoremap <C-V>     v
 
+"====== Auto completes curly brackets and auto tab ===== "
+inoremap { {<CR>}<Esc>ko<tab>
+
+
 "====[ Always turn on syntax highlighting for diffs ]=========================
 " use the filetype mechanism to select automatically...
 filetype on
