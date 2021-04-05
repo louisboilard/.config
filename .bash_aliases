@@ -36,11 +36,14 @@ alias q=exit
 alias python=python3
 alias py=python3
 
+#za for zathura document viewer
+alias za=zathura
+
+#Remove bluelight.
+alias flux='redshift'
 
 # pipe to X11 clipboard
 alias xc='xclip -selection clipboard'
-# trash is safer than rm
-alias rm='trash'
 
 # grep coloring by default
 alias grep='grep --color=auto'
