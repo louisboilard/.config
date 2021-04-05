@@ -24,38 +24,56 @@ to be installed).
 ## Nvim
 
 
-Standard vim config except some Rust specific plugins.
 See comments in the file for details on how to use and for keys.
 
 
+Requirements for all the features: FZF, ctags 
+and language servers that you want to use installed on the system.
+
+
 Uses Deoplete plugin and language server protocol support (languageClient-neovim plugin) 
-for auto completion.
+for auto completion. To use the language client you need to have the proper 
+language servers downloaded (ex rustc, clangd).. Go to symbol definition with gd,
+hover with K and open the language server menu with F5.
 
 
-Uses vim-racer and Deoplete plugin (requires racer) for Rust code completion.
-Also contains rls but turned off by default since vim-racer+deoplete+syntastic 
-were doing better for me.
-
-
-Nerdtree plugin for file tree.
-
-
-rust-doc.vim plugin to generate searchable Rust documentation from within neovim.
-Requires a local copy of the rust docs.
-
-
-Syntastic plugin for syntax checking, toogleable error/warning window and 
-other customizations for error signaling.
-
-
-rust-vim plugin for automatic integration of Syntastic, rustfmt (code formatting),
-file detection and syntax highlighting.
+Nerdtree plugin for file tree (although I recommend navigating files using FZF 
+with the ctrl-p shortcut).
 
 
 splitjoin.vim plugin to switch between single-line statement and multi-line.
 
 
+Vim-commentary to comment highlighted text or current line by 
+using gc/gcc keystrokes.
+
+
+FZF-vim to navigate/access different files. Simply do ctrl-p to access the :Lines
+display in order to switch files (opens a new buffer). You can then cycle through 
+buffers using :b <tab> or ctrl-^ to switch between the two most recently used 
+buffers.
+
+
+Tagbar plugin for tags. Toggle on/off with F9. Requires ctags installed on 
+the system. (not super useful when using a file type that has LSP enabled).
+
+
 Theme/colorscheme: neodark.
+
+
+#### Workflow:
+
+
+Open vim at the root of the project (ideally), then use
+fzf with ctrl-p to open the file finder and find the file you want to work
+on.You can then work in that buffer. To open another file simply do 
+ctrl-p again and select the other file. If you want it in a split do ctrl-v
+once the file is selected, else simply do enter. To switch between the two 
+most recent buffers, use ctrl-^ (very very useful for when there are only 
+two buffers opened). To navigate between multiple buffers, do :b <tab> and 
+simply select the one you want to open. I suggest always having vim opened 
+once the session is started and use another tmux tab to use the terminal for 
+other purposes.
 
 
 ## Tmux
