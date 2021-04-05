@@ -1,5 +1,4 @@
-" ==[ NeoVim Configs]==
-
+" ==[ NeoVim Config]==
 
 " General settings
 set fdm=indent " indent folding
@@ -12,40 +11,34 @@ set undofile           " keep an undo file (undo changes after closing)
 set ruler              " show the cursor position all the time
 set showcmd            " display incomplete commands
 
-
 "" Tab settings
 set tabstop=4     " width that a <tab> is displayed as
 set expandtab     " expand tabs to spaces (use :retab)
 set shiftwidth=4  " width used in each step of autoindent (and << / >>)
-
-" FUZZY FILE FIND
-" Search down into subfolders
-" Provides tab-completion for all file-related tasks
 set path+=**
-
-
-" Display all matching files when we tab complete
 set wildmenu
 
-"set mouse on.
+"enable mouse.
 set mouse=a
+
+" Uses system's clipboard as default.
+set clipboard=unnamed
 
 " switch on highlighting the last used search pattern.
 set hlsearch
 
-" I like highlighting strings inside C comments.
+" highlight strings inside C comments.
 let c_comment_strings=1
 
 " Switch syntax highlighting on
 syntax on 
 
-" Set relative number && line on
+" Set relative number && lines
 set relativenumber
 set number
 
 " Enable file type detection.
 filetype plugin indent on
-
 
 augroup vimrcEx
   autocmd!
@@ -79,8 +72,6 @@ call matchadd('ColorColumn', '\%81v', 100)
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
 nnoremap <silent> N   N:call HLNext(0.4)<cr>
 
-
-
 "Override search highlighting
 highlight Search cterm=NONE ctermfg=None ctermbg=black
 highlight IncSearch cterm=NONE ctermfg=None ctermbg=black
@@ -93,7 +84,6 @@ function! HLNext (blinktime)
     let target_pat = '\c\%#\%('.@/.'\)'
     let ring = matchadd('OnText', target_pat, 101)
 endfunction
-
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 if (has("nvim"))
@@ -123,8 +113,10 @@ nnoremap <C-V>     v
 vnoremap    v   <C-V>
 vnoremap <C-V>     v
 
-"====== Auto completes curly brackets and auto tab ===== "
-inoremap { {<CR>}<Esc>ko<tab>
+"====== Auto completes brackets ===== "
+inoremap { {}<Esc>i
+inoremap ( ()<Esc>i
+inoremap [ []<Esc>i
 
 
 "====[ Always turn on syntax highlighting for diffs ]=========================
@@ -151,8 +143,6 @@ inoremap <C-U> <C-G>u<C-U>
 inoremap <C-F> <C-X><C-F>
 
 
-
-
 "====[ Plugins ]====
 
 " Vim plug automated install
@@ -173,35 +163,16 @@ Plug 'autozimu/LanguageClient-neovim', {
 
 " Multi-entry selection UI.
 Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 " deoplete for auto completion
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-
-"***For Rust completion we use racer. install through rustup before. ***
-Plug 'racer-rust/vim-racer'
+Plug 'Shougo/deoplete.nvim'
 
 " Transform multiline {} into one line and vice versa using gS and gJ
 Plug 'AndrewRadev/splitjoin.vim'
 
-"*** Requires install of rls via rustup to work properly! ***
-" Rust plugin config. (Configures Syntastic for Rust, Tagbar, rustfmt and Playpen)
-Plug 'rust-lang/rust.vim'
-
-" syntastic: Syntax checking plugin.
-Plug 'vim-syntastic/syntastic'
-
-" Tagbar: Browse tags of the current file. set to <F9> to activate
+" Tagbar: Browse tags of the current file. <F9> to activate
 Plug 'majutsushi/tagbar'
-
-" Generates rust documentation from within nvim.
-" Download the rust documentation locally for better usage.
-Plug 'rhysd/rust-doc.vim'
 
 " Better status line
 Plug 'vim-airline/vim-airline'
@@ -210,11 +181,21 @@ Plug 'vim-airline/vim-airline-themes'
 " NerdTree -> file tree displayer.
 Plug 'scrooloose/nerdtree'
 
+" Comments. usage: gcc to comment line, gc to comment block.
+Plug 'tpope/vim-commentary'
+
+" Centers text. Usage: :Goyo to run. :Goyo! to close.
+Plug 'junegunn/goyo.vim'
+
 " Theme
 Plug 'KeitaNakamura/neodark.vim'
 
 "" Better syntax highlighting
 Plug 'sheerun/vim-polyglot'
+
+"Pandoc for rMarkdown compilation. usage: :RMarkdown pdf
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Initialize plugin system
 call plug#end()
@@ -222,104 +203,58 @@ call plug#end()
 
 " ==[ Plugins Config ]==
 
-" Use deoplete on startup (autocomplete by default)
+" Use deoplete on startup
 let g:deoplete#enable_at_startup = 1
 
 " Airline config
 let g:airline_theme = 'fruit_punch'
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
+
+" Make FZF layout reverse and remap ctrl-p for easy access.
+let $FZF_DEFAULT_OPTS = '--layout=reverse'
+nnoremap <C-p> :Files<CR>
+
+" Optional ways to open files while we are inside FZF.
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
 
 " Theme colorscheme
 colorscheme neodark
 
-
-" Tagbar plugin open and close using <F9>
+" Tagbar plugin open and close using <F9>, requires Ctags.
 nnoremap <silent> <F9> :TagbarToggle<CR>
+let g:tagbar_ctags_bin='~/Downloads/ctags/ctags'
 
-" NerdTree plugin opens with ctrl-e and <F4>
+" NerdTree plugin opens with ctrl-e
 nnoremap <C-e> :NERDTreeToggle<CR>
-nnoremap <F4>  :NERDTreeToggle<CR>
 
 " ==[ Language Client config ]==
-" Requires having lsp installed.
+" Requires having the language servers.
+
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
-" Remove autocomplete preview.
+" Autocomplete preview.
 set completeopt-=preview
 
-" start languageclient by default (off)
-let g:LanguageClient_autoStart = 0
-
+" start languageclient by default (on)
+let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rls']
+    \ 'rust': ['rls', '/home/louis/.cargo/bin/rustup'],
+    \ 'cpp' : ['ccls', '--log-file=/tmp/cc.log'],
     \ }
 
+let g:LanguageClient_diagnosticsEnable = 1
+let g:LanguageClient_diagnosticsList = "Quickfix"
+let g:LanguageClient_useVirtualText = "No"
 
-" Configs for racer (autocomplete with deoplete for Rust)
-let g:racer_cmd = "/home/louis/.cargo/bin/racer"
+" Bindings for LSP. 
+nmap <F5> <Plug>(lcn-menu)
+nmap <silent> K <Plug>(lcn-hover)
+nmap <silent> gd <Plug>(lcn-definition)
 
-let g:racer_experimental_completer = 1
-
-" K will open the documentation of whats on the cursor if available.
-nmap K <Plug>(rust-doc)
-
-"Specify that our documentation is in ~/Document (needs to be local)
-"Example to open a specific doc -> :RustDoc ::std::vec
-let g:rust_doc#downloaded_rust_doc_dir = '~/Documents/rust-docs'
-
-
-" ==[ Rust syntastic config (syntax checking) ]==
-" To get info about whats currently going on: :SyntasticInfo
-" read the manual. :help syntastic
-
-"specifies we want cargo to check syntax.
-let g:syntastic_rust_checkers = ['cargo']
-
-" Basic configs
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-"Always populate error list detected by syntastic.
-let g:syntastic_always_populate_loc_list = 0
-
-" Hides Rust warnings that can be annoying.
-"let g:syntastic_rust_cargo_quiet_messages = {'regex': ['variant', 'unused'] }
-
-" Custom symbol for errors
-let g:syntastic_error_symbol = "✗"
-
-
-" Turn highlighting on or off (1=on, 0=off)
-let g:syntastic_enables_highlighting = 0
-
-" Custom symbol for warnings
-let g:syntastic_warning_symbol = "☯ "
-
-" open window when theres an error, closes when none (1=on 0=off)
-let g:syntastic_auto_loc_list = 0
-
-" Open the Error window with <F5>
-nnoremap <F5> :Errors<CR>
-
-" Close the Error window with <F6>
-nnoremap <F6> :lclose<CR>
-
-" Enable balloon text box over error (only if vim compiled with +balloon_eval)
-let g:syntastic_enables_balloons = 1
-
-" Activates syntastics as soon as file is opened.
-let g:syntastic_check_on_open = 1
-
-
-" ==[ Rust formating using rustfmt ]==
-
-" Activate format everytime we :w (save)
-let g:rustfmt_autosave = 1
-
-" press ctrl-f to run :RustFmt
-nnoremap <C-f> :RustFmt<CR>
 
 "====[ End of Plugin Section ]===="
 
