@@ -1,4 +1,4 @@
-" ==[ NeoVim Config]==
+" ==[NeoVim Config]==
 
 " General settings
 set fdm=indent " indent folding
