@@ -1,0 +1,37 @@
+
+" === TO IMPROVE/REMEMBER ===
+
+" === Vertical movement ===
+" g;/g, -> go to last position when something was edited (change list)
+" H,M,L -> high middle low position of the screen.
+" Ctrl-o -> jump to the last position (jump list)
+" gd -> go to definition of object we are on. (LSP)
+" { or } -> jump a paragraph.
+" zz/zt/zb -> puts current line at middle,top,bottom
+" ctrl-f/ctrl-b -> page down and page up
+" 10G -> go to line 10. (usually use 10j/k since we use relative lines.)
+" f9 -> using tagbar plugin with ctags to go to symbol definition.
+
+" === Horizontal movement ===
+" f/F -> go to next/previous occurance of character on current line.
+" w/b/e -> go to next word, previous word, end of current word.
+" /pattern -> search for pattern (not only used horizontally, it's often
+"   the best way to go where we want..)
+
+" === File movement ===
+" :e nameOfFile -> open nameOfFile for (e)diting.
+" :tabnew nameOfFile -> opens file in a newtab
+" gt -> go to next tab.
+" :FZF -> opens fzf to search for a file. FZF required on system.
+" :Buffers -> show all current buffers.
+" :Files/ctrl-p -> Just like fzf but with a preview.
+" :Rg  -> search for a specific line in any file. (ripgrep required)
+" :Lines -> search for a specific line in current buffers.
+" :Ag -> search for line in any files (silver-searcher required).
+" ctrl-e -> opens the nerdtree plugin for file navigation.
+" :b <tab> -> tabs through all the current buffers to enter file.
+" :GFiles -> for git repos.
+" Ctrl-w v -> vertical split. Move between splits with Ctrl-w <h,j,k,l>
+" Ctrl-^ -> hop between two last buffers.
+" QuickfixList -> :ccl to close, :cn and :cp to jump to next/prev
+" Indent current scope/block: =aB or =iB (indent around/inside block)
