@@ -35,3 +35,4 @@
 " Ctrl-^ -> hop between two last buffers.
 " QuickfixList -> :ccl to close, :cn and :cp to jump to next/prev
 " Indent current scope/block: =aB or =iB (indent around/inside block)
+" Select current block/scope: viB or vaB (select inside/around block)
