@@ -16,18 +16,20 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 -- LspSage plugin config. A config layer for lsp.
 local saga = require 'lspsaga'
 saga.init_lsp_saga {
-
-    use_saga_diagnostic_sign = false, -- usure about that one.
-    border_style = "plus",
-    code_action_keys = { quit = 'q', exec = '<CR>' },
-    finder_action_keys = { open = '<CR>', vsplit = 'v',split = 's',quit = 'q',scroll_down = '<C-f>', scroll_up = '<C-b>' },
-    rename_prompt_prefix = '➤',
-    code_action_prompt = {
-      enable = false,
-      sign = false,
-      sign_priority = 20,
-      virtual_text = false,
-    },
+  use_saga_diagnostic_sign = false, -- usure about that one.
+  border_style = "plus",
+  max_preview_lines = 60,
+  finder_definition_icon = '🔥 ',
+  finder_reference_icon =  '🔥 ',
+  code_action_keys = { quit = 'q', exec = '<CR>' },
+  finder_action_keys = { open = '<CR>', vsplit = 'v',split = 's',quit = 'q',scroll_down = '<C-f>', scroll_up = '<C-b>' },
+  rename_prompt_prefix = '➤',
+  code_action_prompt = {
+    enable = false,
+    sign = false,
+    sign_priority = 20,
+    virtual_text = false,
+  },
 }
 
 -- symbols for autocomplete
