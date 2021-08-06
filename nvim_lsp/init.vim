@@ -251,10 +251,20 @@ nnoremap <silent> gR <cmd>lua vim.lsp.buf.references()<CR>
 " v to open in a vertical split, s for horizontal split. enter to simply go (open)
 nnoremap <silent> gr :Lspsaga lsp_finder<CR>
 
+" basic hover doc
 nnoremap <silent> K  <cmd>Lspsaga hover_doc<CR>
+" signature information
+nnoremap <silent> gs <cmd>Lspsaga signature_help<CR>
+" preview definition.
+nnoremap <silent> gk <cmd>Lspsaga preview_definition<CR>
+" renaming
 nnoremap <silent> gn <cmd>lua require('lspsaga.rename').rename()<CR>
+" code actions
 nnoremap <silent> ga <cmd>Lspsaga code_action<CR>
 xnoremap <silent> gA <cmd>Lspsaga range_code_action<CR>
+" open float terminal with \Enter and close it with \ESC
+nnoremap <silent> <Leader><cr> :Lspsaga open_floaterm<CR>
+tnoremap <silent> <Leader><ESC> <C-\><C-n>:Lspsaga close_floaterm<CR>
 
 " Jump to previous/next diagnostic with [e and ]e
 nnoremap <silent> [e <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>
