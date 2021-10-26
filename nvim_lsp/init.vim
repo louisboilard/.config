@@ -1,4 +1,4 @@
-" ===[ Boilard's Neovim Config ]===
+" ==[Neovim Config]==
 
 " General settings
 set fdm=indent " indent folding
@@ -22,16 +22,25 @@ set wildmenu
 set mouse=a
 
 " Uses system's clipboard as default.
-set clipboard=unnamed
+set clipboard=unnamedplus
 
-" switch on highlighting the last used search pattern.
-set hlsearch
+" Makes searches case insensitive if not using capital letters
+set ignorecase
+set smartcase
 
 " highlight strings inside C comments.
 let c_comment_strings=1
 
 " Switch syntax highlighting on
 syntax on
+
+" switch on highlighting the last used search pattern.
+set hlsearch
+
+"Override search highlighting (currently overwritten by fruit_punch)
+highlight Search cterm=NONE ctermfg=Magenta ctermbg=None
+highlight IncSearch cterm=NONE ctermfg=None ctermbg=black
+highlight OnText cterm=inverse ctermfg=None
 
 " Set relative number && lines
 set relativenumber
@@ -63,19 +72,14 @@ if !exists(":DiffOrig")
                  \ | wincmd p | diffthis
 endif
 
-"Make the 81st column stand out
+"Make the 81st column stand out 
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
 
-" Highlight matches when jumping to next 
+"Highlight matches when jumping to next 
 " This rewires n and N to do the highlighing.
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
 nnoremap <silent> N   N:call HLNext(0.4)<cr>
-
-"Override search highlighting
-highlight Search cterm=NONE ctermfg=None ctermbg=black
-highlight IncSearch cterm=NONE ctermfg=None ctermbg=black
-highlight OnText cterm=inverse ctermfg=None
 
 " Inverse color of currently selected text.
 function! HLNext (blinktime)
@@ -121,18 +125,35 @@ vnoremap    v   <C-V>
 vnoremap <C-V>     v
 
 "====== Auto completes brackets ===== "
-inoremap { {}<Esc>i
-inoremap ( ()<Esc>i
+" \c , \b for curly/regular brackets.
+nnoremap <Leader>c o{<Esc>o<Esc>i}<Esc>
+nnoremap <Leader>b a()<Esc>i
 inoremap [ []<Esc>i
+inoremap " ""<Esc>i
 
+" Indent the current block by doing == instead of =Ab
+nnoremap == =aB
+
+"printf shortcut \p
+nnoremap <Leader>p aprintf("\n");<Esc>F\i
+
+"C-style if/else shortcut \i
+nnoremap <Leader>i iif()<Esc>o{<Esc>o<Esc>i}<Esc>oelse<Esc>o{<Esc>o<Esc>i}<Esc>5kf(a
+
+" C-style function declaration \f
+nnoremap <Leader>f ivoid<space>fn()<Esc>o{<Esc>o<Esc>i}<Esc>2kf(a
+
+"====== Remap ctrl-^ with <F2> ===== "
+nnoremap <C-^> <F2>
+nnoremap <F2> <C-^>
 
 "====[ Always turn on syntax highlighting for diffs ]=========================
 " use the filetype mechanism to select automatically...
-filetype on
-augroup PatchDiffHighlight
-    autocmd!
-    autocmd FileType  diff   syntax enable
-augroup END
+" filetype on
+" augroup PatchDiffHighlight
+"     autocmd!
+"     autocmd FileType  diff   syntax enable
+" augroup END
 
 
 "====[ Mappings to activate spell-checking alternatives ]================
@@ -176,13 +197,13 @@ Plug 'hrsh7th/nvim-compe'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
+" deoplete for auto completion
+" Plug 'Shougo/deoplete.nvim'
+
 " Transform multiline {} into one line and vice versa using gS and gJ
 Plug 'AndrewRadev/splitjoin.vim'
 
-" Tagbar: Browse tags of the current file. <F9> to activate
-Plug 'majutsushi/tagbar'
-
-" Airline Status Line
+" Better status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -201,19 +222,21 @@ Plug 'KeitaNakamura/neodark.vim'
 " Better syntax highlighting
 Plug 'sheerun/vim-polyglot'
 
-"Pandoc for rMarkdown compilation. usage: :RMarkdown pdf
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-
 " Initialize plugin system
 call plug#end()
 
-
 " ==[ Plugins Config ]==
+
+" Use deoplete on startup
+" let g:deoplete#enable_at_startup = 1
 
 " Airline config
 let g:airline_theme = 'fruit_punch'
+" Remove title and trailing whitespace information.
 let g:airline#extensions#tabline#enabled = 0
+let g:airline#extensions#whitespace#enabled = 0
+" Only show file's title, not path.
+let g:airline_section_c = '%t'
 
 " Make FZF layout reverse and remap ctrl-p for easy access.
 let $FZF_DEFAULT_OPTS = '--layout=reverse'
@@ -228,20 +251,20 @@ let g:fzf_action = {
 " Theme colorscheme
 colorscheme neodark
 
-" Tagbar plugin open and close using <F9>, requires Ctags.
-nnoremap <silent> <F9> :TagbarToggle<CR>
-let g:tagbar_ctags_bin='~/Downloads/ctags/ctags'
-
 " NerdTree plugin opens with ctrl-e
 nnoremap <C-e> :NERDTreeToggle<CR>
 
 " ==[ Language Client config ]==
+" Requires having the language servers.
 
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
 " Autocomplete preview.
+" set completeopt-=preview
 set completeopt=menuone,noinsert,noselect
+
+" ==[ Language Client config ]==
 
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
@@ -278,22 +301,15 @@ hi LspDiagnosticsVirtualTextWarning guifg=Yellow ctermfg=Yellow
 hi LspDiagnosticsVirtualTextInformation guifg=White ctermfg=White
 hi LspDiagnosticsVirtualTextHint guifg=White ctermfg=White
 
-" This might help fix the not so nice looking lsp_finder floating windows from
-" the gr command
-" set winwidth=15
-" set winminwidth=5
-" autocmd WinEnter * wincmd |
-
 " When cursor is on a diagnostic the diag will pop up
-" autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })
-
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })
 "====[ End of Plugin Section ]===="
 
 "====[ set the background to the color of the terminal ]===========
 hi NonText ctermbg=none
 hi Normal guibg=NONE ctermbg=NONE
 
-lua <<EOF
+lua << EOF
 require("lsp")
 require("treesitter")
 require("completion")
