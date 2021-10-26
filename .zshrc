@@ -8,11 +8,8 @@ export ZSH=$HOME/.oh-my-zsh
 #sets the ZSH source.
 source $ZSH/oh-my-zsh.sh
 
-
-
 # Enable colors and change prompt:
 autoload -U colors && colors
-#PS1="%B%{$fg[black]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[yellow]%}ツ% %{$fg[magenta]%}%~%{$fg[black]%}]%{$reset_color%}$%b "
 
 PS1="%B%{$fg[white]%}[%{$fg[yellow]%}ツ% %{$fg[magenta]%}%~%{$fg[white]%}]%{$reset_color%}$%b "
 
@@ -85,4 +82,4 @@ plugins=(zsh-syntax-highlighting)
 [ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
 # Load zsh-syntax-highlighting; should be last thing of the file
-source /home/louis/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
