@@ -6,7 +6,6 @@ alias ll='exa -l'
 #replace ls by exa (a replacement for ls written in Rust)
 alias ls='exa'
 
-
 #gotop alias to replace top (always use gotop or htop over top)
 alias top=gotop
 
@@ -37,10 +36,10 @@ alias python=python3
 alias py=python3
 
 #za for zathura document viewer
-alias za=zathura
+# alias za=zathura
 
 #Remove bluelight.
-alias flux='redshift'
+# alias flux='redshift'
 
 # pipe to X11 clipboard
 alias xc='xclip -selection clipboard'
