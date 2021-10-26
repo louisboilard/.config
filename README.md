@@ -5,6 +5,19 @@ Config files for Bash, NeoVim, Tmux, Zsh and Alacritty.
 View the comments in the files for more specifications.
 
 
+## Auto install
+
+
+To automatically install the config, cd to where install.sh is located
+(/Dotfiles/.config) and run install.sh (you will need to execute it
+with sudo rights).
+
+
+Some manual tweaking might be required post installation
+(like running PlugUpdate/PlugInstall from nvim and running
+LspInstall <server name> to setup neovim plugins and desired language servers).
+
+
 ---
 
 
