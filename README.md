@@ -9,14 +9,13 @@ View the comments in the files for more specifications.
 ## Examples:
 
 
-
-![exa-bat](https://user-images.githubusercontent.com/39924874/160036120-c18d0ff3-1981-496e-bb99-499199742982.png)
-
-
-![hello_world](https://user-images.githubusercontent.com/39924874/160036198-f4a8a18e-34e5-43d0-88b4-148250bd2a7f.png)
-
-
 ![telescope](https://user-images.githubusercontent.com/39924874/160036224-b64a3aee-d09a-4adc-a640-4fa27c846bda.png)
+
+
+![nvim](https://user-images.githubusercontent.com/39924874/160037643-d9ce55ee-cf80-4e58-a513-9a9d3ce8cedb.png)
+
+
+![exa-bat](https://user-images.githubusercontent.com/39924874/160037655-08dd584b-b624-4321-8147-ba073f788962.png)
 
 
 ## Auto install
