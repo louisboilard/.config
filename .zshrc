@@ -1,17 +1,21 @@
 #Configuration file for zsh
 
+# Path to your oh-my-zsh installation.
+export ZSH="/home/boilou/.oh-my-zsh"
+
 export ZSH=$HOME/.oh-my-zsh
 
 #theme
-#ZSH_THEME="af-magic"
+# ZSH_THEME=""
 
 #sets the ZSH source.
 source $ZSH/oh-my-zsh.sh
 
 # Enable colors and change prompt:
 autoload -U colors && colors
+#PS1="%B%{$fg[black]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[yellow]%}ツ% %{$fg[magenta]%}%~%{$fg[black]%}]%{$reset_color%}$%b "
 
-PS1="%B%{$fg[white]%}[%{$fg[yellow]%}ツ% %{$fg[magenta]%}%~%{$fg[white]%}]%{$reset_color%}$%b "
+# PS1="%B%{$fg[white]%}[%{$fg[yellow]%}ツ% %{$fg[magenta]%}%~%{$fg[white]%}]%{$reset_color%}$%b "
 
 # History in cache directory:
 HISTSIZE=10000
@@ -48,6 +52,7 @@ function zle-keymap-select {
     echo -ne '\e[6 q'
   fi
 }
+
 zle -N zle-keymap-select
 zle-line-init() {
     zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
@@ -57,19 +62,9 @@ zle -N zle-line-init
 echo -ne '\e[6 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 
-# Use lf to switch directories and bind it to ctrl-o
-lfcd () {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp"
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-    fi
-}
-bindkey -s '^o' 'lfcd\n'
-
-
+# Ctrl-p will open fzf with preview (bat must be installed).
+bindkey -s '^p' 'fzf\n'
+export FZF_DEFAULT_OPTS='--layout=reverse --preview "bat --style=numbers --color=always --line-range :500 {}"'
 
 #displays current date when opening new shell.
 date +%d-%m-%Y
@@ -77,9 +72,13 @@ date +%d-%m-%Y
 # Plugins.
 plugins=(zsh-syntax-highlighting)
 
-
 # Load aliases and shortcuts if existent.
 [ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
+export PATH=$PATH:/usr/local/go/bin
+
+export GOPATH=$HOME/go
 # Load zsh-syntax-highlighting; should be last thing of the file
-source $HOME/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+eval "$(starship init zsh)"
