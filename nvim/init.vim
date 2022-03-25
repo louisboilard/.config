@@ -10,6 +10,7 @@ set viewdir=~/.config/nvim/views
 set undofile           " keep an undo file (undo changes after closing)
 set ruler              " show the cursor position all the time
 set showcmd            " display incomplete commands
+set signcolumn=yes
 
 "" Tab settings
 set tabstop=4     " width that a <tab> is displayed as
@@ -124,37 +125,22 @@ nnoremap <C-V>     v
 vnoremap    v   <C-V>
 vnoremap <C-V>     v
 
-"====== Auto completes brackets ===== "
-" \c , \b for curly/regular brackets.
-nnoremap <Leader>c o{<Esc>o<Esc>i}<Esc>
-nnoremap <Leader>b a()<Esc>i
-inoremap [ []<Esc>i
-inoremap " ""<Esc>i
-
 " Indent the current block by doing == instead of =Ab
 nnoremap == =aB
-
-"printf shortcut \p
-nnoremap <Leader>p aprintf("\n");<Esc>F\i
-
-"C-style if/else shortcut \i
-nnoremap <Leader>i iif()<Esc>o{<Esc>o<Esc>i}<Esc>oelse<Esc>o{<Esc>o<Esc>i}<Esc>5kf(a
-
-" C-style function declaration \f
-nnoremap <Leader>f ivoid<space>fn()<Esc>o{<Esc>o<Esc>i}<Esc>2kf(a
 
 "====== Remap ctrl-^ with <F2> ===== "
 nnoremap <C-^> <F2>
 nnoremap <F2> <C-^>
 
-"====[ Always turn on syntax highlighting for diffs ]=========================
-" use the filetype mechanism to select automatically...
-" filetype on
-" augroup PatchDiffHighlight
-"     autocmd!
-"     autocmd FileType  diff   syntax enable
-" augroup END
+"====== Move to new split when splitting ====== "
+nnoremap <C-v> <C-w>v<C-w>l
+nnoremap <C-s> <C-w>s<C-w>j
 
+"====== Move more easily between splits with C-l/h/j/k ====== "
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
 
 "====[ Mappings to activate spell-checking alternatives ]================
 nmap  ;s     :set invspell spelllang=en<CR>
@@ -183,25 +169,45 @@ endif
 " Specify a directory for plugins
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Multi-entry selection UI.
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
+" Selection UI fuzzy finder
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-media-files.nvim'
 
-" nvim 0.5 integrated LSP plugins.
+" Icons && Colors
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'folke/lsp-colors.nvim'
+
+" nvim 0.5+ integrated LSP plugins.
 Plug 'neovim/nvim-lspconfig'
-Plug 'kabouzeid/nvim-lspinstall'
-Plug 'glepnir/lspsaga.nvim'
-Plug 'hrsh7th/nvim-compe'
+Plug 'williamboman/nvim-lsp-installer'
+
+" Completion plugin and sub plugins for lsp/paths/snippets/buffers
+" TODO: find a way to only show cmp if more than x chars are written
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'saadparwaiz1/cmp_luasnip'
+
+" Toggle terminal (set to <leader>Enter)
+Plug 'akinsho/toggleterm.nvim'
+
+" snippets
+Plug 'L3MON4D3/LuaSnip/'
+Plug 'rafamadriz/friendly-snippets'
+
+" Treesitter aware auto-pairing for brackets
+Plug 'windwp/nvim-autopairs'
+
+" Prettier diagnostics/lsp/telescope results
+" Basic usage: C-x
+Plug 'folke/trouble.nvim'
 
 " Tree sitter
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-
-" deoplete for auto completion
-" Plug 'Shougo/deoplete.nvim'
-
-" Transform multiline {} into one line and vice versa using gS and gJ
-Plug 'AndrewRadev/splitjoin.vim'
 
 " Better status line
 Plug 'vim-airline/vim-airline'
@@ -216,19 +222,27 @@ Plug 'tpope/vim-commentary'
 " Centers text. Usage: :Goyo to run. :Goyo! to close.
 Plug 'junegunn/goyo.vim'
 
-" Theme
+" Themes
 Plug 'KeitaNakamura/neodark.vim'
-
-" Better syntax highlighting
-Plug 'sheerun/vim-polyglot'
+Plug 'bluz71/vim-moonfly-colors'
+Plug 'savq/melange'
+Plug 'rmehri01/onenord.nvim'
+Plug 'yonlu/omni.vim'
 
 " Initialize plugin system
 call plug#end()
 
+
+
 " ==[ Plugins Config ]==
 
-" Use deoplete on startup
-" let g:deoplete#enable_at_startup = 1
+" Theme colorscheme
+set termguicolors
+" colorscheme neodark
+" colorscheme moonfly
+" colorscheme melange
+" colorscheme omni
+colorscheme onenord
 
 " Airline config
 let g:airline_theme = 'fruit_punch'
@@ -238,24 +252,33 @@ let g:airline#extensions#whitespace#enabled = 0
 " Only show file's title, not path.
 let g:airline_section_c = '%t'
 
-" Make FZF layout reverse and remap ctrl-p for easy access.
-let $FZF_DEFAULT_OPTS = '--layout=reverse'
-nnoremap <C-p> :Files<CR>
+" Find files using Telescope command-line sugar.
+" To preview media files, use :Telescope media_files
+" To see all possible keys, do Ctrl-p to open telescope, Esc
+" to go normal mode and type ?
+" possible themes are: get_dropdown, get_cursor, get_ivy or none.
+nnoremap <C-p>      <cmd>Telescope find_files theme=get_ivy <cr>
 
-" Optional ways to open files while we are inside FZF.
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
+" Lsp lsp_references inside telescope with gr
+nnoremap gr <cmd>lua require'telescope.builtin'.lsp_references{} theme=get_ivy<cr>
 
-" Theme colorscheme
-colorscheme neodark
+" Treesitter symbols with <F9>
+nnoremap <silent><F9> <cmd>lua require'telescope.builtin'.treesitter{} theme=get_ivy<cr>
+
+" use ga for code actions and display them in telescope (type enter to complete)
+nnoremap ga <cmd>lua require'telescope.builtin'.lsp_code_actions{} theme=get_ivy<cr>
+
+" Grep string under cursor in current dir and search for string
+nnoremap <space> <cmd>Telescope grep_string theme=get_ivy<cr>
+nnoremap <leader><space> <cmd>Telescope live_grep theme=get_ivy<cr>
+
+"Remaps for trouble.nvim TODO: open this with telescope, not in the
+"quickfix list.
+nnoremap <C-x> <cmd>TroubleToggle<cr>
+nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 
 " NerdTree plugin opens with ctrl-e
 nnoremap <C-e> :NERDTreeToggle<CR>
-
-" ==[ Language Client config ]==
-" Requires having the language servers.
 
 " Required for operations modifying multiple buffers like rename.
 set hidden
@@ -264,53 +287,28 @@ set hidden
 " set completeopt-=preview
 set completeopt=menuone,noinsert,noselect
 
-" ==[ Language Client config ]==
 
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gR <cmd>lua vim.lsp.buf.references()<CR>
-
-" This shows the definition and references.
-" v to open in a vertical split, s for horizontal split. enter to simply go (open)
-nnoremap <silent> gr :Lspsaga lsp_finder<CR>
-
-" basic hover doc
-nnoremap <silent> K  <cmd>Lspsaga hover_doc<CR>
-" signature information
-nnoremap <silent> gs <cmd>Lspsaga signature_help<CR>
-" preview definition.
-nnoremap <silent> gk <cmd>Lspsaga preview_definition<CR>
-" renaming
-nnoremap <silent> gn <cmd>lua require('lspsaga.rename').rename()<CR>
-" code actions
-nnoremap <silent> ga <cmd>Lspsaga code_action<CR>
-xnoremap <silent> gA <cmd>Lspsaga range_code_action<CR>
-" open float terminal with \Enter and close it with \ESC
-nnoremap <silent> <Leader><cr> :Lspsaga open_floaterm<CR>
-tnoremap <silent> <Leader><ESC> <C-\><C-n>:Lspsaga close_floaterm<CR>
-
-" Jump to previous/next diagnostic with [e and ]e
-nnoremap <silent> [e <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>
-nnoremap <silent> ]e <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>
-
-" Errors in Red
-hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red
-" Warnings in Yellow
-hi LspDiagnosticsVirtualTextWarning guifg=Yellow ctermfg=Yellow
-" Info and Hints in White
-hi LspDiagnosticsVirtualTextInformation guifg=White ctermfg=White
-hi LspDiagnosticsVirtualTextHint guifg=White ctermfg=White
-
-" When cursor is on a diagnostic the diag will pop up
-autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })
 "====[ End of Plugin Section ]===="
 
 "====[ set the background to the color of the terminal ]===========
-hi NonText ctermbg=none
+hi NonText ctermbg=none guibg=NONE
 hi Normal guibg=NONE ctermbg=NONE
+" NC == non current, like a split
+hi NormalNC guibg=NONE ctermbg=NONE
+
+" Left most side bar where signs (diagnostics) are displayed
+hi SignColumn ctermbg=NONE ctermfg=NONE guibg=NONE
+
+" Used for some floating windows
+hi Pmenu ctermbg=NONE ctermfg=NONE guibg=NONE
+hi FloatBorder ctermbg=NONE ctermfg=DarkYellow guibg=NONE
+hi NormalFloat ctermbg=NONE ctermfg=DarkYellow guibg=NONE
 
 lua << EOF
-require("lsp")
-require("treesitter")
-require("completion")
+require("user.lsp")
+require("user.treesitter")
+require("user.cmp")
+require("user.telescope")
+require("user.autopairs")
+require("user.toggleterm")
 EOF

@@ -1,4 +1,3 @@
-
 " === TO IMPROVE/REMEMBER ===
 
 " === Vertical movement ===
@@ -36,3 +35,18 @@
 " QuickfixList -> :ccl to close, :cn and :cp to jump to next/prev
 " Indent current scope/block: =aB or =iB (indent around/inside block)
 " Select current block/scope: viB or vaB (select inside/around block)
+
+" USE MOTIONS DONT MOVE BEFORE ACTING.
+" gQ/gq -> makes all lines 80 characters max automatically.
+" gf -> go to file.
+" gd -> go to definition.
+" g, -> go to latest edit
+" g; -> go to oldest edit
+" Ctrl-O/ctrl-I -> move through jump list.
+" J -> merges the line below with the current line.
+" vep -> replace current word with the clipboard.
+" diw/ciw -> delete/replace all the word even if we aren't on first char.
+" dap/dip -> delete paragraph (paragraph is represented by a newline).
+" ctrl-w v -> splits the window in 2 vertically (ctrl-w s for horizontal).
+" ctrl-w h,j,k,l -> Access the splits.
+" :cope50 -> list all errors (open the quickfix window with 50 lines).
