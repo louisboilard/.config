@@ -15,8 +15,7 @@ View the comments in the files for more specifications.
 ![nvim](https://user-images.githubusercontent.com/39924874/160037643-d9ce55ee-cf80-4e58-a513-9a9d3ce8cedb.png)
 
 
-![exa-bat](https://user-images.githubusercontent.com/39924874/160037655-08dd584b-b624-4321-8147-ba073f788962.png)
-
+![cava-cmatrix](https://user-images.githubusercontent.com/39924874/160253252-b8231c1a-db07-4dbe-b1ad-a2ef0ed03af9.png)
 
 ## Auto install
 
