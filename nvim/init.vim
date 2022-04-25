@@ -101,7 +101,6 @@ endif
 
 
 "====[ Make tabs, trailing whitespace, and non-breaking spaces visible ]======
-" TODO: only do this for golang? Don't do it for c++ cross platform projects
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
@@ -179,7 +178,6 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
 
 " Completion plugin and sub plugins for lsp/paths/snippets/buffers
-" TODO: find a way to only show cmp if more than x chars are written
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-path'
