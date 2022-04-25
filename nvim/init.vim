@@ -101,11 +101,16 @@ endif
 
 
 "====[ Make tabs, trailing whitespace, and non-breaking spaces visible ]======
+" TODO: only do this for golang? Don't do it for c++ cross platform projects
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
 "=====[ Remove highlighting (:noh) after search]=============
 nnoremap <Esc> :noh<cr><Esc>
+
+"===== Replace at center of screen when scrolling through code ======
+nnoremap [[ [[zz
+nnoremap ]] ]]zz
 
 "=====[ Make Y do what it's meant to do ]=============
 nnoremap  Y  y$
@@ -146,17 +151,6 @@ nnoremap <C-k> <C-w>k
 nmap  ;s     :set invspell spelllang=en<CR>
 nmap  ;ss    :set    spell spelllang=en-basic<CR>
 
-" Make ambiguous tags the default
-nnoremap <C-]> g<C-]>
-
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
-
-" Make filename completion while in insert mode easier
-inoremap <C-F> <C-X><C-F>
-
-
 "====[ Plugins ]====
 
 " Vim plug automated install
@@ -178,6 +172,7 @@ Plug 'nvim-telescope/telescope-media-files.nvim'
 " Icons && Colors
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/lsp-colors.nvim'
+Plug 'norcalli/nvim-colorizer.lua'
 
 " nvim 0.5+ integrated LSP plugins.
 Plug 'neovim/nvim-lspconfig'
@@ -209,12 +204,14 @@ Plug 'folke/trouble.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
-" Better status line
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Status and tab line
+Plug 'nvim-lualine/lualine.nvim'
 
 " NerdTree -> file tree displayer.
 Plug 'scrooloose/nerdtree'
+
+" Bufferline
+Plug 'akinsho/bufferline.nvim'
 
 " Comments. usage: gcc to comment line, gc to comment block.
 Plug 'tpope/vim-commentary'
@@ -222,17 +219,21 @@ Plug 'tpope/vim-commentary'
 " Centers text. Usage: :Goyo to run. :Goyo! to close.
 Plug 'junegunn/goyo.vim'
 
+" Markdown preview. Start with :MarkdownPreview stop with :MarkdownPreviewStop
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+
 " Themes
 Plug 'KeitaNakamura/neodark.vim'
+Plug 'luisiacc/gruvbox-baby', {'branch': 'main'}
 Plug 'bluz71/vim-moonfly-colors'
 Plug 'savq/melange'
 Plug 'rmehri01/onenord.nvim'
 Plug 'yonlu/omni.vim'
+Plug 'Mofiqul/dracula.nvim'
+" Plug 'louisboilard/pyramid.nvim'
 
 " Initialize plugin system
 call plug#end()
-
-
 
 " ==[ Plugins Config ]==
 
@@ -243,14 +244,12 @@ set termguicolors
 " colorscheme melange
 " colorscheme omni
 colorscheme onenord
+" colorscheme dracula
+" colorscheme gruvbox-baby
 
-" Airline config
-let g:airline_theme = 'fruit_punch'
-" Remove title and trailing whitespace information.
-let g:airline#extensions#tabline#enabled = 0
-let g:airline#extensions#whitespace#enabled = 0
-" Only show file's title, not path.
-let g:airline_section_c = '%t'
+" let g:pyramid_background_color = "dark"
+" let g:pyramid_transparent_mode = 1
+" colorscheme pyramid
 
 " Find files using Telescope command-line sugar.
 " To preview media files, use :Telescope media_files
@@ -258,6 +257,7 @@ let g:airline_section_c = '%t'
 " to go normal mode and type ?
 " possible themes are: get_dropdown, get_cursor, get_ivy or none.
 nnoremap <C-p>      <cmd>Telescope find_files theme=get_ivy <cr>
+nnoremap <F10>      <cmd>Telescope find_files theme=get_ivy <cr>
 
 " Lsp lsp_references inside telescope with gr
 nnoremap gr <cmd>lua require'telescope.builtin'.lsp_references{} theme=get_ivy<cr>
@@ -280,6 +280,10 @@ nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 " NerdTree plugin opens with ctrl-e
 nnoremap <C-e> :NERDTreeToggle<CR>
 
+" Cycle through buffers
+" nnoremap <silent>[b :BufferLineCycleNext<CR>
+" nnoremap <silent>b] :BufferLineCyclePrev<CR>
+
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
@@ -291,18 +295,29 @@ set completeopt=menuone,noinsert,noselect
 "====[ End of Plugin Section ]===="
 
 "====[ set the background to the color of the terminal ]===========
-hi NonText ctermbg=none guibg=NONE
-hi Normal guibg=NONE ctermbg=NONE
+" This is in the actual .local/share/nvim/plugged/<colorscheme>
+" HERE
+" hi NonText ctermbg=none guibg=NONE
+" hi Normal guibg=NONE ctermbg=NONE
+
 " NC == non current, like a split
-hi NormalNC guibg=NONE ctermbg=NONE
 
+" HERE
+" hi NormalNC guibg=NONE ctermbg=NONE
 " Left most side bar where signs (diagnostics) are displayed
-hi SignColumn ctermbg=NONE ctermfg=NONE guibg=NONE
+" hi SignColumn ctermbg=NONE ctermfg=NONE guibg=NONE
 
+" HERE
 " Used for some floating windows
-hi Pmenu ctermbg=NONE ctermfg=NONE guibg=NONE
-hi FloatBorder ctermbg=NONE ctermfg=DarkYellow guibg=NONE
-hi NormalFloat ctermbg=NONE ctermfg=DarkYellow guibg=NONE
+" hi Pmenu ctermbg=NONE ctermfg=NONE guibg=NONE
+" hi FloatBorder ctermbg=NONE ctermfg=NONE guibg=NONE
+" hi NormalFloat ctermbg=NONE ctermfg=NONE guibg=NONE
+
+
+
+" hi TabLine ctermbg=NONE ctermfg=NONE guibg=NONE
+" hi TabLineSel ctermbg=NONE ctermfg=NONE guibg=NONE
+" hi TabLineFill ctermbg=NONE ctermfg=NONE guibg=NONE
 
 lua << EOF
 require("user.lsp")
@@ -311,4 +326,7 @@ require("user.cmp")
 require("user.telescope")
 require("user.autopairs")
 require("user.toggleterm")
+require("user.colorizer")
+require("user.bufferline")
+require("user.lualine")
 EOF

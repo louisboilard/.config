@@ -101,8 +101,8 @@ cmp.setup {
       vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
       -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
       vim_item.menu = ({
-        nvim_lsp = "[lsp]",
         luasnip = "[Snippet]",
+        nvim_lsp = "[lsp]",
         buffer = "[Buffer]",
         path = "[Path]",
       })[entry.source.name]
@@ -120,11 +120,18 @@ cmp.setup {
     behavior = cmp.ConfirmBehavior.Replace,
     select = false,
   },
-  documentation = {
-    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+  -- documentation = {
+  --   border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+  -- },
+  window = {
+      documentation = "native",
   },
   experimental = {
     ghost_text = true,
     native_menu = false,
+  },
+  completion = {
+    -- Required characters before triggering cmp
+    keyword_length = 3,
   },
 }
