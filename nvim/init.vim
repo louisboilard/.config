@@ -99,8 +99,8 @@ if (has("termguicolors"))
     set notermguicolors
 endif
 
-
 "====[ Make tabs, trailing whitespace, and non-breaking spaces visible ]======
+" TODO: only do this for golang? Don't do it for c++ cross platform projects
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
@@ -228,7 +228,7 @@ Plug 'savq/melange'
 Plug 'rmehri01/onenord.nvim'
 Plug 'yonlu/omni.vim'
 Plug 'Mofiqul/dracula.nvim'
-" Plug 'louisboilard/pyramid.nvim'
+Plug 'louisboilard/pyramid.nvim'
 
 " Initialize plugin system
 call plug#end()
@@ -236,18 +236,23 @@ call plug#end()
 " ==[ Plugins Config ]==
 
 " Theme colorscheme
-set termguicolors
 " colorscheme neodark
 " colorscheme moonfly
 " colorscheme melange
 " colorscheme omni
-colorscheme onenord
+" colorscheme onenord
 " colorscheme dracula
 " colorscheme gruvbox-baby
 
+set termguicolors
+syntax enable
+
 " let g:pyramid_background_color = "dark"
-" let g:pyramid_transparent_mode = 1
-" colorscheme pyramid
+" let g:pyramid_background_color = "light"
+let g:pyramid_transparent_mode = 1
+
+colorscheme pyramid
+
 
 " Find files using Telescope command-line sugar.
 " To preview media files, use :Telescope media_files
@@ -313,9 +318,10 @@ set completeopt=menuone,noinsert,noselect
 
 
 
-" hi TabLine ctermbg=NONE ctermfg=NONE guibg=NONE
-" hi TabLineSel ctermbg=NONE ctermfg=NONE guibg=NONE
-" hi TabLineFill ctermbg=NONE ctermfg=NONE guibg=NONE
+" hi TabLine ctermbg=None ctermfg=None guibg=None
+" tablinesel is the lil colored bar at the leftmost part of current tab
+" hi TabLineSel ctermbg=None ctermfg=NONE guibg=NONE
+" hi TabLineFill ctermbg=None ctermfg=None guibg=None
 
 lua << EOF
 require("user.lsp")
