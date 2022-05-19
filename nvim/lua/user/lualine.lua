@@ -1,11 +1,12 @@
 -- tango is my custom theme in .local/share/nvim/plugged/lualine/lua/themes
 -- local custom_theme = require'lualine.themes.tango'
--- local pyramid = require'lualine.themes.pyramid'
+local pyramid = require'lualine.themes.pyramid'
 
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'auto', -- auto matches the nvim theme (neodark, onenord..)
+    -- theme = 'auto', -- auto matches the nvim theme (neodark, onenord..)
+    theme = pyramid,
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {},
