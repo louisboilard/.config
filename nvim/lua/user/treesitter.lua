@@ -1,6 +1,6 @@
 require'nvim-treesitter.configs'.setup {
     -- ensure_installed can be "all" or a list of languages { "python", "javascript" }
-    ensure_installed = {"lua", "vue", "cpp", "python", "go", "rust", "javascript", "bash", "c"},
+    ensure_installed = {"lua", "vue", "cpp", "python", "go", "rust", "javascript", "bash", "c", "java", "javascript", "html", "css"},
     -- ensure_installed = {"all"},
     autopairs = {
         enable = true,
