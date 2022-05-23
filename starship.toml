@@ -1,4 +1,4 @@
-add_newline = true
+add_newline = false
 
 [git_status]
 disabled = true
@@ -6,11 +6,21 @@ disabled = true
 [git_branch]
 symbol = "🌱 "
 
+[package]
+disabled = true
+
 [character]
 #success_symbol = "[➜ ](bold green)"
 # success_symbol = "[🐏 ](bold green)"
+
 # format = """
 # [│](bold green)
 # [└> 🐏 ](bold green) """
+
+# format = """
+# [└> ](bold green) """
+
+# format = """
+# [🐏 ➜ ](bold green) """
 format = """
-[└> ](bold green) """
+[➜ ](bold green) """
