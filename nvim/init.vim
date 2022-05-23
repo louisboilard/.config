@@ -104,7 +104,7 @@ endif
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
-"=====[ Remove highlighting (:noh) after search]=============
+"=====[ Remove highlighting (:noh) after search]======
 nnoremap <Esc> :noh<cr><Esc>
 
 "===== Replace at center of screen when scrolling through code ======
@@ -113,6 +113,12 @@ nnoremap ]] ]]zz
 
 "=====[ Make Y do what it's meant to do ]=============
 nnoremap  Y  y$
+
+"=====[ Use <leader>p to paste 0 register (avoid pasting deletes) ]=====
+nnoremap  <leader>p  "0p
+
+"=====[ Select/highlight a block using <leader>h (\h) ]=====
+nnoremap  <leader>h  va{
 
 "===[ Keep cursor in the middle of the screen when doing next/line joins ]===
 nnoremap n nzz
@@ -136,7 +142,7 @@ nnoremap == =aB
 nnoremap <C-^> <F2>
 nnoremap <F2> <C-^>
 
-"====== Move to new split when splitting ====== "
+"====== Move to new split when splitting ======
 nnoremap <C-v> <C-w>v<C-w>l
 nnoremap <C-s> <C-w>s<C-w>j
 
@@ -146,7 +152,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 
-"====[ Mappings to activate spell-checking alternatives ]================
+"====[ Mappings to activate spell-checking alternatives ]====
 nmap  ;s     :set invspell spelllang=en<CR>
 nmap  ;ss    :set    spell spelllang=en-basic<CR>
 
@@ -248,7 +254,6 @@ set termguicolors
 syntax enable
 
 " let g:pyramid_background_color = "dark"
-" let g:pyramid_background_color = "light"
 let g:pyramid_transparent_mode = 1
 
 colorscheme pyramid
@@ -297,26 +302,21 @@ set completeopt=menuone,noinsert,noselect
 
 "====[ End of Plugin Section ]===="
 
+" Override some colorscheme for real "full transparency"
 "====[ set the background to the color of the terminal ]===========
-" This is in the actual .local/share/nvim/plugged/<colorscheme>
-" HERE
 " hi NonText ctermbg=none guibg=NONE
 " hi Normal guibg=NONE ctermbg=NONE
 
-" NC == non current, like a split
+" NC == non current, like an unfocused split
 
-" HERE
 " hi NormalNC guibg=NONE ctermbg=NONE
 " Left most side bar where signs (diagnostics) are displayed
 " hi SignColumn ctermbg=NONE ctermfg=NONE guibg=NONE
 
-" HERE
 " Used for some floating windows
 " hi Pmenu ctermbg=NONE ctermfg=NONE guibg=NONE
 " hi FloatBorder ctermbg=NONE ctermfg=NONE guibg=NONE
 " hi NormalFloat ctermbg=NONE ctermfg=NONE guibg=NONE
-
-
 
 " hi TabLine ctermbg=None ctermfg=None guibg=None
 " tablinesel is the lil colored bar at the leftmost part of current tab
