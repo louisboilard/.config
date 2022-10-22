@@ -1,7 +1,7 @@
 # Dotfiles.
 
 
-Config files for Bash, NeoVim, Tmux, Zsh and Alacritty.
+Config files for Bash, NeoVim, Tmux, Zsh, Alacritty, Kitty.
 View the comments in the files for more specifications.
 
 
@@ -59,11 +59,11 @@ Use treesitter + native lsp + nvim-cmp + snippets + telescope
 for a full feature experience.
 
 
-Nerdtree plugin for file tree (although I recommend navigating files using telescope/FZF
+Nvim-tree plugin for file tree (although I recommend navigating files using telescope/FZF
 with the ctrl-p shortcut).
 
 
-Vim-commentary to comment highlighted text or current line by 
+Vim-commentary to comment highlighted text or current line by
 using gc/gcc keystrokes.
 
 
@@ -73,7 +73,7 @@ buffers using :b tab or ctrl-^ to switch between the two most recently used
 buffers.
 
 
-Theme/colorscheme: onenord, neodark... Just make sure you're using a 256color term.
+Theme/colorscheme: pyramid, onenord, neodark... Use a 256color term.
 
 
 #### Workflow:
@@ -95,11 +95,13 @@ Use ctrl-o/ctrl-i to travel through the jumplist for easy
 navigation.
 Use leader-enter to open\close the toggle terminal.
 
+See init.vim for config as it's quite involved and has many options.
+
 
 ## Tmux
 
 
-Includes mouse scrolling. Default prefix is remapped to C-a as 
+Includes mouse scrolling. Default prefix is remapped to C-a as
 opposed to the default C-b.
 
 
@@ -120,3 +122,10 @@ the .bash_aliases file).
 alactritty.yml file to see the config for the
 Alactritty terminal emulator. Includes transparency and 
 other slight windows adjustments. Runs Zsh by default.
+
+
+## Kitty
+
+
+Currently only using on some OS where Alacritty is misbehaving.
+Also glyphs are cute.
