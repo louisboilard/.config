@@ -6,6 +6,11 @@ alias ll='exa -l'
 #replace ls by exa (a replacement for ls written in Rust)
 alias ls='exa'
 
+# git aliases
+alias gs='git status'
+alias gd='git diff'
+alias gds='git diff --staged'
+
 #gotop alias to replace top (always use gotop or htop over top)
 alias top=gotop
 
@@ -56,6 +61,10 @@ alias btc='curl http://rate.sx/btc@1d'
 # for help simply do curl rate.sx/:help
 alias crypto='curl rate.sx'
 
+# I can't type.
+alias claer="clear"
+alias celar="clear"
 
-
+# requires "howdoi" to be installed
+alias how="howdoi"
 
