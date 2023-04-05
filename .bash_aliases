@@ -10,9 +10,7 @@ alias ls='exa'
 alias gs='git status'
 alias gd='git diff'
 alias gds='git diff --staged'
-
-#gotop alias to replace top (always use gotop or htop over top)
-alias top=gotop
+alias fetchpull='git fetch && git pull'
 
 # open ~/.bash_aliases in vim simply by typing bashalias in the shell.
 alias bash_aliases='nvim ~/.bash_aliases'
@@ -54,7 +52,6 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-
 # Get today's bitcoin price graph within terminal
 alias btc='curl http://rate.sx/btc@1d'
 # get top 10 crypto currency info within terminal.
@@ -68,3 +65,14 @@ alias celar="clear"
 # requires "howdoi" to be installed
 alias how="howdoi"
 
+alias claer="clear"
+alias cler="clear"
+alias celar="clear"
+alias clar="clear"
+alias clera="clear"
+
+# requires ripgrep (rg).
+# Use smart case (only case sensitive if contains capital letters)
+alias rg="rg -S"
+
+alias dirs="dirs -v"
