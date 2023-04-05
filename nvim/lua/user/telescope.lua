@@ -5,6 +5,7 @@ end
 
 telescope.load_extension('fzf')
 telescope.load_extension('media_files')
+telescope.load_extension('harpoon')
 
 local actions = require "telescope.actions"
 
@@ -14,6 +15,7 @@ telescope.setup {
     prompt_prefix = "  ",
     selection_caret = " ",
     path_display = { "smart" },
+    initial_mode = "insert",
 
     mappings = {
       i = {

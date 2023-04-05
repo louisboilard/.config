@@ -5,25 +5,30 @@ set fdm=indent " indent folding
 set foldlevel=99 " by default folds are not collapsed
 set backup             " keep a backup file (restore to previous version)
 set backupdir=~/.config/nvim/backup " set backup file directory
-set dir=~/.config/nvim/swp " set swap & undo files directory
+" set dir=~/.config/nvim/swp " set swap & undo files directory
 set viewdir=~/.config/nvim/views
 set undofile           " keep an undo file (undo changes after closing)
 set ruler              " show the cursor position all the time
 set showcmd            " display incomplete commands
 set signcolumn=yes
 
-"" Tab settings
+" Tab settings
+" To transform spaces to tabs-> :set noexpandtab and then :%retab!
 set tabstop=4     " width that a <tab> is displayed as
 set expandtab     " expand tabs to spaces (use :retab)
 set shiftwidth=4  " width used in each step of autoindent (and << / >>)
 set path+=**
 set wildmenu
+set scrolloff=8
+set sidescrolloff=20 " This + nowrap moves the screen horizontally
+set nowrap
 
 "enable mouse.
 set mouse=a
 
-" Uses system's clipboard as default.
+" Uses system's clipboard as default. (When not using smartyank)
 set clipboard=unnamedplus
+set clipboard^=unnamedplus
 
 " Makes searches case insensitive if not using capital letters
 set ignorecase
@@ -40,7 +45,7 @@ set hlsearch
 
 "Override search highlighting (currently overwritten by fruit_punch)
 highlight Search cterm=NONE ctermfg=Magenta ctermbg=None
-highlight IncSearch cterm=NONE ctermfg=None ctermbg=black
+highlight IncSearch cterm=NONE ctermfg=None ctermbg=Black
 highlight OnText cterm=inverse ctermfg=None
 
 " Set relative number && lines
@@ -104,25 +109,47 @@ endif
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
-"=====[ Remove highlighting (:noh) after search]======
+inoremap <F6> if err != nil {<cr>}<Esc>
+inoremap <F7> Console.WriteLine($"{}");<Esc>
+
+"=====[ Remove highlighting (:noh) after search ]======
 nnoremap <Esc> :noh<cr><Esc>
 
-"===== Replace at center of screen when scrolling through code ======
-nnoremap [[ [[zz
-nnoremap ]] ]]zz
+"=====[ See diffs of the current file  with <F8> ]======
+nnoremap <F8> :w !diff % -<cr>
+
+"=====[ Jump to next git hunk ]=============
+nnoremap  <F3>  :Gitsigns next_hunk<cr>
+
+"=====[ Copy full path of current file to clipboard ]======
+nnoremap <F7> :let @+ = expand("%:p")<cr>
+
+"===== Stay at center of screen when scrolling through code ======
+" This is only valid on non-lsp buffers since [[ is used to move to functions
+" when lsp is enabled
+nnoremap [[ 5jzz
+nnoremap ]] 5kzz
+
+"===== Stay at center of screen when moving in change list ======
+nnoremap g; g;zz
+nnoremap g, g;zz
 
 "=====[ Make Y do what it's meant to do ]=============
 nnoremap  Y  y$
 
 "=====[ Use <leader>p to paste 0 register (avoid pasting deletes) ]=====
 nnoremap  <leader>p  "0p
+vnoremap  <leader>p  "0p
 
-"=====[ Select/highlight a block using <leader>h (\h) ]=====
-nnoremap  <leader>h  va{
+"=====[ Select/highlight inside a block using <leader>h (\h) ]=====
+nnoremap  <leader>h  vi{
 
 "===[ Keep cursor in the middle of the screen when doing next/line joins ]===
 nnoremap n nzz
 nnoremap J mzJ`z
+
+" Open new file adjacent to current file
+nnoremap <leader>o :e <C-R>=expand("%:p:h") . "/" <CR>
 
 "====[ Swap : and ; to make colon commands easier to type ]======
 nnoremap  ;  :
@@ -169,6 +196,7 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Selection UI fuzzy finder
+Plug 'stevearc/dressing.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope.nvim'
@@ -190,6 +218,14 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'saadparwaiz1/cmp_luasnip'
 
+" Lots of additional feature over regular lsp for rust
+" See user/rust-tools.lua for commands.
+" Plug 'simrat39/rust-tools.nvim'
+
+" Debugger client
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+
 " Toggle terminal (set to <leader>Enter)
 Plug 'akinsho/toggleterm.nvim'
 
@@ -207,24 +243,63 @@ Plug 'folke/trouble.nvim'
 " Tree sitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/nvim-treesitter-context'
 
 " Status and tab line
 Plug 'nvim-lualine/lualine.nvim'
 
-" NerdTree -> file tree displayer.
-Plug 'scrooloose/nerdtree'
+" File tree displayer.
+Plug 'kyazdani42/nvim-tree.lua'
 
 " Bufferline
 Plug 'akinsho/bufferline.nvim'
 
 " Comments. usage: gcc to comment line, gc to comment block.
-Plug 'tpope/vim-commentary'
+Plug 'numToStr/Comment.nvim'
 
 " Centers text. Usage: :Goyo to run. :Goyo! to close.
 Plug 'junegunn/goyo.vim'
 
+" Smart yanking. This overrides clipboard settings
+Plug 'ibhagwan/smartyank.nvim'
+
 " Markdown preview. Start with :MarkdownPreview stop with :MarkdownPreviewStop
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+
+" Surround text objects.
+" Surround: ys<text object><char> ex: ysw" (w is the word at cursor)
+" Delete surrounding pair: ds<char that surrounds> ex: dsb (b for bracket) dsB
+" for {} (B is for {asdasd})
+" Change surrounding pair: cs<char that surrounds> ex: csb' (change bracket
+" for ')
+Plug 'kylechui/nvim-surround'
+
+" Avoid getting lost in brackets
+Plug 'lukas-reineke/indent-blankline.nvim'
+
+" Highlight unique chars in a line to use f/F/t/T efficiently
+Plug 'unblevable/quick-scope'
+
+" Use s/S to navigate anywhere on the visible screen. Also overwrites F/f/T/t
+" (but not when quick-scope plugin is active).
+Plug 'ggandor/leap.nvim'
+
+" Mark files per project and navigate between marked files
+Plug 'ThePrimeagen/harpoon'
+
+" Git signs
+Plug 'lewis6991/gitsigns.nvim'
+
+" Custom notifications
+Plug 'rcarriga/nvim-notify'
+
+" Smooth scrolling
+Plug 'karb94/neoscroll.nvim'
+
+" float minimap on right side.
+" <leader>mf -> focus/onfocus window
+" <leader>mm -> toggle
+Plug 'gorbit99/codewindow.nvim'
 
 " Themes
 Plug 'KeitaNakamura/neodark.vim'
@@ -233,8 +308,11 @@ Plug 'bluz71/vim-moonfly-colors'
 Plug 'savq/melange'
 Plug 'rmehri01/onenord.nvim'
 Plug 'yonlu/omni.vim'
+Plug 'rebelot/kanagawa.nvim'
 Plug 'Mofiqul/dracula.nvim'
 Plug 'louisboilard/pyramid.nvim'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'rose-pine/neovim', {'as': 'rose-pine'}
 
 " Initialize plugin system
 call plug#end()
@@ -242,39 +320,44 @@ call plug#end()
 " ==[ Plugins Config ]==
 
 " Theme colorscheme
+set termguicolors
+syntax enable
+
 " colorscheme neodark
 " colorscheme moonfly
 " colorscheme melange
 " colorscheme omni
 " colorscheme onenord
+" colorscheme catppuccin
+" colorscheme kanagawa
+colorscheme rose-pine
 " colorscheme dracula
 " colorscheme gruvbox-baby
-
-set termguicolors
-syntax enable
+" colorscheme pyramid
 
 " let g:pyramid_background_color = "dark"
-let g:pyramid_transparent_mode = 1
+" let g:pyramid_transparent_mode = 1
 
-colorscheme pyramid
-
+" For quick-scope (only highlight when f/F/t/T is pressed)
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
+highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
 
 " Find files using Telescope command-line sugar.
 " To preview media files, use :Telescope media_files
 " To see all possible keys, do Ctrl-p to open telescope, Esc
 " to go normal mode and type ?
 " possible themes are: get_dropdown, get_cursor, get_ivy or none.
-nnoremap <C-p>      <cmd>Telescope find_files theme=get_ivy <cr>
-nnoremap <F10>      <cmd>Telescope find_files theme=get_ivy <cr>
+nnoremap <C-p> <cmd>Telescope find_files theme=get_ivy <cr>
 
-" Lsp lsp_references inside telescope with gr
-nnoremap gr <cmd>lua require'telescope.builtin'.lsp_references{} theme=get_ivy<cr>
+" mm to open harpoon menu
+autocmd FileType harpoon setlocal wrap
+nnoremap mm <cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>
+" mf to mark a file
+nnoremap mf <cmd>lua require("harpoon.mark").add_file()<cr>
 
 " Treesitter symbols with <F9>
 nnoremap <silent><F9> <cmd>lua require'telescope.builtin'.treesitter{} theme=get_ivy<cr>
-
-" use ga for code actions and display them in telescope (type enter to complete)
-nnoremap ga <cmd>lua require'telescope.builtin'.lsp_code_actions{} theme=get_ivy<cr>
 
 " Grep string under cursor in current dir and search for string
 nnoremap <space> <cmd>Telescope grep_string theme=get_ivy<cr>
@@ -282,15 +365,10 @@ nnoremap <leader><space> <cmd>Telescope live_grep theme=get_ivy<cr>
 
 "Remaps for trouble.nvim TODO: open this with telescope, not in the
 "quickfix list.
-nnoremap <C-x> <cmd>TroubleToggle<cr>
-nnoremap gR <cmd>TroubleToggle lsp_references<cr>
+nnoremap  <C-x> <cmd>lua require'telescope.builtin'.diagnostics{} theme=get_ivy<cr>
 
 " NerdTree plugin opens with ctrl-e
-nnoremap <C-e> :NERDTreeToggle<CR>
-
-" Cycle through buffers
-" nnoremap <silent>[b :BufferLineCycleNext<CR>
-" nnoremap <silent>b] :BufferLineCyclePrev<CR>
+nnoremap <C-e> :NvimTreeToggle<CR>
 
 " Required for operations modifying multiple buffers like rename.
 set hidden
@@ -298,30 +376,34 @@ set hidden
 " Autocomplete preview.
 " set completeopt-=preview
 set completeopt=menuone,noinsert,noselect
-
-
-"====[ End of Plugin Section ]===="
+" set completeopt=menuone,menu,noselect
 
 " Override some colorscheme for real "full transparency"
 "====[ set the background to the color of the terminal ]===========
-" hi NonText ctermbg=none guibg=NONE
-" hi Normal guibg=NONE ctermbg=NONE
+hi NonText ctermbg=none guibg=NONE
+hi Normal guibg=NONE ctermbg=NONE
 
 " NC == non current, like an unfocused split
 
-" hi NormalNC guibg=NONE ctermbg=NONE
+hi NormalNC guibg=NONE ctermbg=NONE
 " Left most side bar where signs (diagnostics) are displayed
-" hi SignColumn ctermbg=NONE ctermfg=NONE guibg=NONE
+hi SignColumn ctermbg=NONE ctermfg=NONE guibg=NONE
 
 " Used for some floating windows
-" hi Pmenu ctermbg=NONE ctermfg=NONE guibg=NONE
-" hi FloatBorder ctermbg=NONE ctermfg=NONE guibg=NONE
-" hi NormalFloat ctermbg=NONE ctermfg=NONE guibg=NONE
+hi Pmenu ctermbg=NONE ctermfg=NONE guibg=NONE
+hi FloatBorder ctermbg=NONE ctermfg=NONE guibg=NONE
+hi NormalFloat ctermbg=NONE ctermfg=NONE guibg=NONE
 
-" hi TabLine ctermbg=None ctermfg=None guibg=None
+hi TabLine ctermbg=None ctermfg=None guibg=None
 " tablinesel is the lil colored bar at the leftmost part of current tab
 " hi TabLineSel ctermbg=None ctermfg=NONE guibg=NONE
 " hi TabLineFill ctermbg=None ctermfg=None guibg=None
+
+" Show the current line
+set cursorline
+hi clear CursorLine
+hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None
+"====[ End of Plugin Section ]===="
 
 lua << EOF
 require("user.lsp")
@@ -333,4 +415,21 @@ require("user.toggleterm")
 require("user.colorizer")
 require("user.bufferline")
 require("user.lualine")
+require("user.nvimtree")
+require("user.treesittercontext")
+require("user.harpoon")
+require("user.surround")
+require("user.lsp.lspconfig")
+require("user.dressing")
+require("user.indent-blankline")
+require("user.smartyank")
+require("gitsigns").setup()
+require("Comment").setup()
+require("neoscroll").setup()
+require("codewindow").setup()
+require("codewindow").apply_default_keybinds()
+require("leap").add_default_mappings()
+require("user.notify")
+vim.notify = require("notify")
 EOF
+
