@@ -37,9 +37,6 @@ alias fetchpull='git fetch && git pull'
 #gotop alias to replace top (always use gotop or htop over top)
 # alias top=gotop
 
-alias platform='cd $HOME/Projects/Gravity/GSPlatform/'
-alias polaris='cd $HOME/Projects/Polaris/src/'
-
 alias agenda='nvim ~/Documents/Notes/AGENDA.md'
 alias notes='cd ~/Documents/Notes/'
 alias gym='nvim ~/Documents/Notes/gym.md'
@@ -98,17 +95,6 @@ alias btc='curl http://rate.sx/btc@1d'
 # for help simply do curl rate.sx/:help
 alias crypto='curl rate.sx'
 
-alias k8="kubectl"
-# alias k8s="kubectl config use-context arn:aws:eks:us-east-1:720048933537:cluster/gravi-staging"
-alias k8s="kubectl config use-context arn:aws:eks:eu-central-1:720048933537:cluster/us_east_1_stateless"
-alias k8sStateless="kubectl config use-context arn:aws:eks:eu-central-1:720048933537:cluster/us_east_1_stateless"
-alias k8sUsCollab="kubectl config use-context arn:aws:eks:us-east-1:720048933537:cluster/us_east_1_collab_alpha"
-alias k8sCollab="kubectl config use-context arn:aws:eks:eu-central-1:720048933537:cluster/collab_alpha"
-
-# alias k8p="kubectl config use-context arn:aws:eks:us-east-1:560361624624:cluster/gravi-prod"
-alias k8p="kubectl config use-context arn:aws:eks:us-east-1:560361624624:cluster/us_east_1_stateless"
-# alias k8p="kubectl config use-context arn:aws:eks:us-east-1:560361624624:cluster/gravi-prod"
-
 alias claer="clear"
 alias cler="clear"
 alias celar="clear"
@@ -121,8 +107,6 @@ alias how="howdoi"
 # requires ripgrep (rg).
 # Use smart case (only case sensitive if contains capital letters)
 alias rg="rg -S"
-
-alias dirs="dirs -v"
 
 set -U fish_cursor_insert line
 starship init fish | source
