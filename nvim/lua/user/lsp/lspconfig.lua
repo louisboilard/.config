@@ -1,4 +1,5 @@
-local nvim_lsp = require'lspconfig'
+-- currently unused. To defined a specific server config, do so in the fn
+-- setup_handlers() inside lsp-installer.lua
 
 local opts = {
     tools = { -- rust-tools options
@@ -25,3 +26,7 @@ local opts = {
 }
 
 -- require('rust-tools').setup(opts)
+--
+-- require("lspconfig").lua_ls.setup {}
+-- require("lspconfig").rust_analyzer.setup {}
+-- require("lspconfig").vimls.setup {}
