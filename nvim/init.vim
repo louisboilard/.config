@@ -20,8 +20,12 @@ set shiftwidth=4  " width used in each step of autoindent (and << / >>)
 set path+=**
 set wildmenu
 set scrolloff=8
-set sidescrolloff=20 " This + nowrap moves the screen horizontally
-set nowrap
+" set sidescrolloff=20 " This + nowrap moves the screen horizontally
+" set nowrap
+
+set wrap
+set linebreak
+" set showbreak
 
 "enable mouse.
 set mouse=a
@@ -59,7 +63,7 @@ augroup vimrcEx
   autocmd!
 
   " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+  " autocmd FileType text setlocal textwidth=78
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -179,6 +183,9 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 
+" Open current window in new tab with T
+nnoremap T     <C-w>T
+
 "====[ Mappings to activate spell-checking alternatives ]====
 nmap  ;s     :set invspell spelllang=en<CR>
 nmap  ;ss    :set    spell spelllang=en-basic<CR>
@@ -209,7 +216,8 @@ Plug 'norcalli/nvim-colorizer.lua'
 
 " nvim 0.5+ integrated LSP plugins.
 Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/nvim-lsp-installer'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
 
 " Completion plugin and sub plugins for lsp/paths/snippets/buffers
 Plug 'hrsh7th/nvim-cmp'
@@ -225,6 +233,9 @@ Plug 'saadparwaiz1/cmp_luasnip'
 " Debugger client
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
+Plug 'theHamsta/nvim-dap-virtual-text'
+Plug 'leoluz/nvim-dap-go'
+Plug 'nvim-telescope/telescope-dap.nvim'
 
 " Toggle terminal (set to <leader>Enter)
 Plug 'akinsho/toggleterm.nvim'
@@ -403,10 +414,19 @@ hi TabLine ctermbg=None ctermfg=None guibg=None
 set cursorline
 hi clear CursorLine
 hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None
+set textwidth=80
 "====[ End of Plugin Section ]===="
 
 lua << EOF
-require("user.lsp")
+require("mason").setup()
+require("mason-lspconfig").setup()
+require("user.lsp.init")
+
+require("dapui").setup()
+require("dap-go").setup()
+require("nvim-dap-virtual-text").setup()
+require("user.dap-config")
+
 require("user.treesitter")
 require("user.cmp")
 require("user.telescope")
@@ -414,12 +434,13 @@ require("user.autopairs")
 require("user.toggleterm")
 require("user.colorizer")
 require("user.bufferline")
+require("nvim-web-devicons").setup()
+require("lsp-colors").setup()
 require("user.lualine")
 require("user.nvimtree")
 require("user.treesittercontext")
 require("user.harpoon")
 require("user.surround")
-require("user.lsp.lspconfig")
 require("user.dressing")
 require("user.indent-blankline")
 require("user.smartyank")
