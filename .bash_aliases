@@ -58,13 +58,11 @@ alias btc='curl http://rate.sx/btc@1d'
 # for help simply do curl rate.sx/:help
 alias crypto='curl rate.sx'
 
-# I can't type.
-alias claer="clear"
-alias celar="clear"
 
 # requires "howdoi" to be installed
 alias how="howdoi"
 
+# I can't type.
 alias claer="clear"
 alias cler="clear"
 alias celar="clear"
