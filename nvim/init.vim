@@ -109,8 +109,9 @@ if (has("termguicolors"))
 endif
 
 "====[ Make tabs, trailing whitespace, and non-breaking spaces visible ]======
-" TODO: only do this for golang? Don't do it for c++ cross platform projects
-exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+" exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+" exec "set listchars=tab:\uB7\uB7,trail:\uB7,nbsp:~"
+exec "set listchars+=trail:\uB7"
 set list
 
 inoremap <F6> if err != nil {<cr>}<Esc>
