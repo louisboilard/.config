@@ -6,21 +6,26 @@ disabled = true
 [git_branch]
 symbol = "🌱 "
 
+# Disable visual noise "via <language xyz>..."
 [package]
+disabled = true
+[aws]
+disabled = true
+[nodejs]
+disabled = true
+[python]
+disabled = true
+[rust]
+disabled = true
+[java]
+disabled = true
+[ruby]
+disabled = true
+[golang]
+disabled = true
+[dotnet]
 disabled = true
 
 [character]
-#success_symbol = "[➜ ](bold green)"
-# success_symbol = "[🐏 ](bold green)"
-
-# format = """
-# [│](bold green)
-# [└> 🐏 ](bold green) """
-
-# format = """
-# [└> ](bold green) """
-
-# format = """
-# [🐏 ➜ ](bold green) """
 format = """
 [➜ ](bold green) """
