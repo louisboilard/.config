@@ -40,6 +40,11 @@ chsh -s /bin/zsh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 apt install exa
 
+# install fish
+sudo apt-add-repository ppa:fish-shell/release-3
+sudo apt update
+sudo apt install fish
+
 # Install nvim and it's dependencies.
 apt install neovim
 apt install fzf
