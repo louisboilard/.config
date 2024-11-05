@@ -26,16 +26,6 @@ apt install htop
 apt install gotop
 apt install neofetch
 
-# Installing zsh/oh-my-zsh and making it the default shell.
-echo "Installing zsh/oh-my-zsh and making it the default."
-apt install zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-# oh my zsh syntax highlight plugin
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/zsh-syntax-highlighting
-cp ./.zshrc $HOME
-chsh -s /bin/zsh
-
 # Install rustc/cargo/exa (ls replacement)
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 apt install exa
