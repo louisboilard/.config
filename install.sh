@@ -30,10 +30,14 @@ apt install neofetch
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 apt install exa
 
+curl -sS https://starship.rs/install.sh | sh
+
 # install fish
-sudo apt-add-repository ppa:fish-shell/release-3
-sudo apt update
-sudo apt install fish
+apt-add-repository ppa:fish-shell/release-3
+apt update
+apt install fish
+
+cp -r ./kitty/ $HOME/.config/kitty
 
 # Install nvim and it's dependencies.
 apt install neovim
