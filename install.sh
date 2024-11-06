@@ -37,6 +37,9 @@ apt-add-repository ppa:fish-shell/release-3
 apt update
 apt install fish
 
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+ln -s ~/.local/kitty.app ~/usr/bin/
+ln -s ~/.local/kitten ~/usr/bin/
 cp -r ./kitty/ $HOME/.config/kitty
 
 # Install nvim and it's dependencies.
