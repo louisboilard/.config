@@ -32,11 +32,13 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 apt install exa
 
 curl -sS https://starship.rs/install.sh | sh
+cp starship.toml $HOME/.config/
 
 # install fish
 apt-add-repository ppa:fish-shell/release-3
 apt update
 apt install fish
+cp config.fish $HOME/.config/
 
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 # Create symbolic links to add kitty and kitten to PATH (assuming ~/.local/bin is in
@@ -57,25 +59,16 @@ apt install neovim
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-nvimDir=$HOME/.config/nvim
-if [ ! -d "$nvimDir" ]; then
-  cp -R ./nvim_lsp $HOME/.config/
-else
-  cp ./nvim_lsp/init.vim $HOME/.config/nvim/
-  cp -R ./nvim_lsp/lua $HOME/.config/nvim/
-fi
-
+mkdir $HOME/.config/nvim
 mkdir $HOME/.config/nvim/backup
 mkdir $HOME/.config/nvim/swp
+cp -r ./nvim/ $HOME/.config/nvim
 
 # Install tmux and setup
 apt install tmux
 cp ./.tmux.conf $HOME/
 
-# Alacritty installation and setup (config + making it the default terminal)
-cargo install alacritty
-cp ./alacritty.yml $HOME/
-update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator $(which alacritty) 50
+update-alternatives --config x-terminal-emulator
 
 echo ""
 echo ""
