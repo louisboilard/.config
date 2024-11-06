@@ -20,6 +20,7 @@ cp ./.bash_aliases $HOME
 apt update && apt upgrade
 apt install build-essential
 apt install curl
+apt install fzf
 apt install wget
 apt install git
 apt install htop
@@ -38,13 +39,21 @@ apt update
 apt install fish
 
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-ln -s ~/.local/kitty.app ~/usr/bin/
-ln -s ~/.local/kitten ~/usr/bin/
+# Create symbolic links to add kitty and kitten to PATH (assuming ~/.local/bin is in
+# your system-wide PATH)
+ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/
+cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
+cp ~/.local/kitty.app/share/applications/kitty-open.desktop ~/.local/share/applications/
+# Update the paths to the kitty and its icon in the kitty desktop file(s)
+sed -i "s|Icon=kitty|Icon=$(readlink -f ~)/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
+sed -i "s|Exec=kitty|Exec=$(readlink -f ~)/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
+# Make xdg-terminal-exec (and hence desktop environments that support it use kitty)
+echo 'kitty.desktop' > ~/.config/xdg-terminals.list
+
 cp -r ./kitty/ $HOME/.config/kitty
 
 # Install nvim and it's dependencies.
 apt install neovim
-apt install fzf
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
