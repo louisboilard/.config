@@ -26,6 +26,9 @@ apt install git
 apt install htop
 apt install gotop
 apt install neofetch
+apt install hexyl
+apt install bat
+apt install nmap
 
 # Install rustc/cargo/exa (ls replacement)
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -33,6 +36,9 @@ apt install exa
 
 curl -sS https://starship.rs/install.sh | sh
 cp starship.toml $HOME/.config/
+
+cargo install git-delta
+cp .gitconfig $HOME/
 
 # install fish
 apt-add-repository ppa:fish-shell/release-3
@@ -69,6 +75,9 @@ apt install tmux
 cp ./.tmux.conf $HOME/
 
 update-alternatives --config x-terminal-emulator
+
+curl -LO https://github.com/BurntSushi/ripgrep/releases/download/14.1.0/ripgrep_14.1.0-1_amd64.deb
+dpkg -i ripgrep_14.1.0-1_amd64.deb
 
 echo ""
 echo ""

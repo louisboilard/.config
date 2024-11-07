@@ -1,7 +1,7 @@
 # implies Delta and git-lfs are installed
 [user]
-    name = # ..
-    email = # ..
+    ; name = # ..
+    ; email = # ..
 [core]
     autocrlf = false
     editor = nvim
