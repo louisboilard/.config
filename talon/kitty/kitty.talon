@@ -49,12 +49,16 @@ resume:
     key(enter)
 
 save:
-    insert(";")
-    insert("w")
+    insert(";w")
     key(enter)
 
 quit:
-    insert(";")
-    insert("q")
+    insert(";q")
     key(enter)
 
+force quit all:
+    insert(";qall!")
+    key(enter)
+
+lisa durr:
+    insert("ls ")
