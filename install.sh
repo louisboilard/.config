@@ -29,6 +29,8 @@ apt install neofetch
 apt install hexyl
 apt install bat
 apt install nmap
+apt install fd-find
+ln -s $(which fdfind) usr/bin/fd
 
 # Install rustc/cargo/exa (ls replacement)
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
