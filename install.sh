@@ -29,6 +29,7 @@ apt install neofetch
 apt install hexyl
 apt install bat
 apt install nmap
+apt install xclip
 apt install fd-find
 ln -s $(which fdfind) usr/bin/fd
 
@@ -80,6 +81,11 @@ update-alternatives --config x-terminal-emulator
 
 curl -LO https://github.com/BurntSushi/ripgrep/releases/download/14.1.0/ripgrep_14.1.0-1_amd64.deb
 dpkg -i ripgrep_14.1.0-1_amd64.deb
+
+mkdir $HOME/.talon
+mkdir $HOME/.talon/user
+git clone https://github.com/talonhub/community.git $HOME/.talon/user/
+cp -r ./talon/kitty/ $HOME/.talon/user/community
 
 echo ""
 echo ""
