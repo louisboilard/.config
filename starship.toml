@@ -23,8 +23,6 @@ disabled = true
 disabled = true
 [golang]
 disabled = true
-[dotnet]
-disabled = true
 
 [character]
 format = """

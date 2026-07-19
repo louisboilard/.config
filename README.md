@@ -1,7 +1,7 @@
 # Dotfiles.
 
 
-Config files for Bash, NeoVim, Tmux, Zsh, Alacritty, Kitty, Fish...
+Config files for Neovim, Fish, Bash aliases, Tmux, and Kitty.
 View the comments in the files for more specifications.
 
 
@@ -23,9 +23,8 @@ To automatically install the config run install.sh.
 
 
 
-Some manual tweaking might be required post installation
-(like running PlugUpdate/PlugInstall from nvim and running
-LspInstall to setup neovim plugins and desired language servers).
+On first nvim launch, lazy.nvim bootstraps and installs all plugins, and mason
+installs the LSP servers / formatters / linters automatically.
 
 
 ---
@@ -37,58 +36,43 @@ LspInstall to setup neovim plugins and desired language servers).
 Basic bash configurations. In vi mode by default (defaults to insert mode on launch).
 
 
-Aliases in .bash_aliases
+Aliases in .bash_aliases (shared/mirrored in the fish config).
 
 
 Very standard except for the Rust specific exports. ls replaced by exa (exa needs
-to be installed). Mostly unused (using zsh).
+to be installed).
 
 
 ## Nvim
 
 
-See comments in the file for details on how to use and for keys.
+Neovim 0.12 config that leans on the editor's built-ins (native LSP, treesitter,
+`gc` commenting, snippets) with a small, modern plugin set managed by lazy.nvim.
+LSP servers, formatters and linters install automatically via mason on first
+launch. See `nvim/README.md` for the full layout, LSP list, and the built-in
+git-review workflow (`:Review`).
 
 
-Requirements for all the features: FZF, ripgrep,
-and language servers that you want to use installed on the system (LspInstall).
+Requirements: ripgrep + fzf (telescope), and the tree-sitter CLI
+(`brew install tree-sitter-cli`) for parser builds.
 
 
-Use treesitter + native lsp + nvim-cmp + snippets + telescope + Mason
-for a full feature experience.
-
-TODO: update this with some neat tricks/information about custom keymaps and
-such.
-
-Theme/colorscheme: pyramid, onenord, neodark... Use a 256color term.
-
-Also supports debugging.
+Theme: pyramid.
 
 
 #### Workflow:
 
 
-Open nvim at the root of the project (ideally), then use
-telescope with ctrl-p to open the file finder and find the file you want to work
-on.
-To open another file simply do
-ctrl-p again and select the other file. If you want it in a split do ctrl-v
-once the file is selected. To switch between the two
-most recent buffers, use ctrl-^ or F2.
-To navigate between multiple buffers, do :b <tab> and
-simply select the one you want to open. To split do ctrl-v or ctrl-s in normal mode.
+Open nvim at the project root, then:
 
-To search for files that contain a string do leader-space in normal mode,
-to search for files containing the string currently under the cursor do space
-(uses ripgrep).
-Use ctrl-o/ctrl-i to travel through the jumplist for easy
-navigation (and g; g, for edit list).
+- `ctrl-p` — telescope file finder (`ctrl-v` on a result opens it in a split)
+- `space` — grep the word under the cursor; `leader-space` — live grep (ripgrep)
+- `ctrl-^` / `F2` — switch between the two most recent buffers
+- `ctrl-v` / `ctrl-s` — vertical / horizontal split
+- `ctrl-o` / `ctrl-i` — jumplist; `g;` / `g,` — change list
+- `leader-enter` — toggle the built-in terminal
 
-Use leader-enter to open\close the toggle terminal.
-
-See the custom maps (there's plenty) for more details.
-
-See init.vim for config as it's quite involved and has many options.
+Leader is `\`. See the config for the (many) other custom maps.
 
 
 ## Tmux
@@ -96,17 +80,6 @@ See init.vim for config as it's quite involved and has many options.
 
 Includes mouse scrolling. Default prefix is remapped to C-a as
 opposed to the default C-b.
-
-
-## Zsh
-
-
-.zshrc file to see Z(oomer) shell config.
-Vi mode specifics, use of the zsh-syntax-highlighting plugin 
-for highlighting and ctrl-o bind to access fzf. Using lf
-as the terminal file manager. Aliases are
-shared with the bash config (fetched from
-the .bash_aliases file).
 
 
 ## Fish
@@ -117,17 +90,8 @@ Better out of the box autocomplete and has some nice features
 and default cmd's. Config file -> config.fish
 
 
-## Alactritty
-
-
-alactritty.yml file to see the config for the
-Alactritty terminal emulator. Includes transparency and 
-other slight windows adjustments. Runs Zsh by default.
-
-
 ## Kitty
 
 
-Alacritty alternative. Currently use this more than Alacritty.
-Config in kitty.conf.
+Terminal emulator. Config in kitty.conf.
 

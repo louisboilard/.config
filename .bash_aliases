@@ -1,76 +1,58 @@
-# Useful bash aliases.
+# Useful shell aliases (sourced by both bash and fish).
+# Machine-specific / private aliases go in ~/.bash_aliases.local (untracked).
 
-# some ls aliases
+# ls -> exa
 alias la='exa -a'
-alias ll='exa -l'
-#replace ls by exa (a replacement for ls written in Rust)
+alias ll='exa -l --icons'
 alias ls='exa'
 
-# git aliases
-alias gs='git status'
+# git
+alias gs='git status -uno'          # -uno: hide untracked files
+alias ga='git add'
+alias gc='git commit'
 alias gd='git diff'
 alias gds='git diff --staged'
+alias gp='git push'
+alias gcm='git checkout main'
 alias fetchpull='git fetch && git pull'
 
-# open ~/.bash_aliases in vim simply by typing bashalias in the shell.
+# open configs quickly
 alias bash_aliases='nvim ~/.bash_aliases'
-
-# open ~/.bashrc in vim simply by typing bashrc in the shell.
 alias bashrc='nvim ~/.bashrc'
+alias fishrc='nvim ~/.config/fish/config.fish'
+alias kittyrc='nvim ~/.config/kitty/kitty.conf'
+alias vimrc='nvim ~/.config/nvim/init.lua'
 
-# open ~/.zshrc in vim simply by typing zshrc in the shell
-alias zshrc='nvim ~/.zshrc'
-
-# opens the init.vim config file (equivalent of vimrc for neovim).
-alias vimrc='nvim ~/.config/nvim/init.vim'
-
-# open ~/.config/alacritty/alacritty.yml in vim simply by 
-#typing alacrittyrc in the shell.
-alias alacrittyrc='nvim ~/.config/alacritty/alacritty.yml'
-
-#Vim alias
+# editor / misc
 alias v=nvim
-
-#Vim style exit
 alias q=exit
-
-#python aliases
-alias python=python3
 alias py=python3
 
-#za for zathura document viewer
-# alias za=zathura
+# osx clipboard
+alias xc='pbcopy'
+alias f='fzf | xc'
 
-#Remove bluelight.
-# alias flux='redshift'
-
-# pipe to X11 clipboard
-alias xc='xclip -selection clipboard'
-
-# grep coloring by default
+# grep coloring
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# Get today's bitcoin price graph within terminal
-alias btc='curl http://rate.sx/btc@1d'
-# get top 10 crypto currency info within terminal.
-# for help simply do curl rate.sx/:help
-alias crypto='curl rate.sx'
+# kubernetes
+alias k8="kubectl"
+# Pick a pod with fzf, then describe it. ($s are escaped so they survive alias
+# definition; xargs -I% means a cancelled fzf selection runs nothing.)
+alias kube_describe="kubectl get pods -A --no-headers | fzf | awk '{print \$1, \$2}' | xargs -I% sh -c 'set -- %; kubectl describe pod \"\$2\" -n \"\$1\"'"
 
+# ripgrep (smart case); rgp also excludes json
+alias rg="rg -S"
+alias rgp="rg -S -g '!*.json'"
 
-# requires "howdoi" to be installed
-alias how="howdoi"
-
-# I can't type.
+# clear typos
 alias claer="clear"
 alias cler="clear"
 alias celar="clear"
 alias clar="clear"
 alias clera="clear"
 
-# requires ripgrep (rg).
-# Use smart case (only case sensitive if contains capital letters)
-alias rg="rg -S"
-
-alias dirs="dirs -v"
+# Machine-specific / private aliases, not tracked in git.
+[ -f "$HOME/.bash_aliases.local" ] && source "$HOME/.bash_aliases.local"
