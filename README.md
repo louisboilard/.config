@@ -16,15 +16,48 @@ View the comments in the files for more specifications.
 
 ![cava-cmatrix](https://user-images.githubusercontent.com/39924874/160253252-b8231c1a-db07-4dbe-b1ad-a2ef0ed03af9.png)
 
-## Auto install
+## Install
 
+`install.sh` bootstraps everything on **macOS or Ubuntu/Debian**. It's
+idempotent (safe to re-run).
 
-To automatically install the config run install.sh.
+Prerequisites — just enough to clone this repo; the script installs the rest
+(including Homebrew on macOS):
 
+- **macOS:** `curl` is built in; `git` ships with the Xcode Command Line Tools.
+  Run `xcode-select --install` once, then clone. You do **not** install Homebrew
+  yourself — `install.sh` does that.
+- **Ubuntu/Debian:** `sudo apt update && sudo apt install -y git curl`.
 
+Then:
 
-On first nvim launch, lazy.nvim bootstraps and installs all plugins, and mason
-installs the LSP servers / formatters / linters automatically.
+```sh
+git clone <this-repo> ~/Dotfiles && ~/Dotfiles/.config/install.sh
+```
+
+What it does:
+
+- Installs the latest core tools — neovim, git (+lfs), ripgrep, fd, bat, fzf,
+  eza, git-delta, tmux, fish, starship, kitty, node, the tree-sitter CLI, and
+  the UbuntuMono Nerd Font (via Homebrew on macOS; apt + official release
+  binaries on Linux), plus the Rust toolchain and Talon community setup.
+- Deploys the configs by **copying** them into place (`~` and `~/.config`),
+  backing up anything it replaces to `~/.dotfiles-backup/<timestamp>/`.
+- Rewrites the hardcoded `/opt/homebrew` tool paths in `.tmux.conf` / `kitty.conf`
+  to wherever those tools actually live on the machine.
+- Sets fish as the default login shell.
+
+Other entry points:
+
+```sh
+./install.sh --deploy   # only (re)copy configs + fix up paths (no packages)
+./install.sh --update   # git pull, then redeploy configs
+```
+
+On first `nvim` launch, lazy.nvim bootstraps its plugins and mason installs the
+LSP servers / formatters / linters automatically.
+
+Private, machine-specific aliases go in `~/.bash_aliases.local` (untracked).
 
 
 ---
@@ -36,11 +69,10 @@ installs the LSP servers / formatters / linters automatically.
 Basic bash configurations. In vi mode by default (defaults to insert mode on launch).
 
 
-Aliases in .bash_aliases (shared/mirrored in the fish config).
+Aliases in .bash_aliases (shared with the fish config, which sources it).
 
 
-Very standard except for the Rust specific exports. ls replaced by exa (exa needs
-to be installed).
+Very standard except for the Rust specific exports. ls is replaced by eza.
 
 
 ## Nvim
