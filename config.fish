@@ -32,8 +32,10 @@ alias .5='cd ../../../../..'
 # shared aliases
 [ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
-# PATH
+# PATH + default editor
 export PATH="$HOME/.local/bin:$PATH"
+export EDITOR=nvim
+export VISUAL=nvim
 
 fzf --fish | source
 starship init fish | source

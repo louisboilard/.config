@@ -5,6 +5,16 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# Default editor
+export EDITOR=nvim
+export VISUAL=nvim
+
+# Ensure ~/.local/bin is on PATH (bat/fd/fzf symlinks, local binaries)
+case ":$PATH:" in
+    *":$HOME/.local/bin:"*) ;;
+    *) export PATH="$HOME/.local/bin:$PATH" ;;
+esac
+
 
 [[ $- = *i* ]] && bind TAB:menu-complete
 # If not running interactively, don't do anything
