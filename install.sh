@@ -129,7 +129,7 @@ install_linux() {
   sudo apt-get update -y
   sudo apt-get install -y \
     build-essential curl wget git git-lfs unzip tar ca-certificates gnupg \
-    fontconfig ripgrep tmux fish xclip
+    fontconfig ncurses-term ripgrep tmux fish xclip
   git lfs install || true
 
   # bat/fd ship with renamed binaries on Debian/Ubuntu.
