@@ -1,10 +1,10 @@
 # Useful shell aliases (sourced by both bash and fish).
 # Machine-specific / private aliases go in ~/.bash_aliases.local (untracked).
 
-# ls -> exa
-alias la='exa -a'
-alias ll='exa -l --icons'
-alias ls='exa'
+# ls -> eza
+alias la='eza -a'
+alias ll='eza -l --icons'
+alias ls='eza'
 
 # git
 alias gs='git status -uno'          # -uno: hide untracked files
